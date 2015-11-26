@@ -119,9 +119,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="cell.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="Floor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cell.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
