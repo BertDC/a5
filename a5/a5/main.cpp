@@ -1,14 +1,21 @@
 #include "Floor.h"
 #include "cell.h"
-#include <istream>
-#include <iostream>
-#include <ctime>
+#include "Controller.h"
+using namespace std;
 
 
 // The main function acts as our controller with the program. It holds the Floor object on the Stack
-int main() {
-	int level = 1;		// Records which floor the 
-	Floor theFloor(level);
-
+int main(int argc, char *argv[]) {
+	string file;
+	if (argc == 1) {
+		// Gets the inputted file text
+		file = argv[1];
+	} 
+	else {
+		// Case where no filename is given. Uses default
+		file = "map.txt";
+	}
+	Controller c(file);
+	c.play();
 
 }

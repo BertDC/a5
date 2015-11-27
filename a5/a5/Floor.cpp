@@ -5,24 +5,23 @@
 
 using namespace std;
 
-
-Floor::Floor(int level) : level(level) {
-
-}
+// The only constructor
+Floor::Floor(int level) : level(level), grid(NULL), player(NULL), alive(true) { }
 
 
 Floor::~Floor() {
 
 }
 
-void Floor::loadFile(istream & input) {
+void Floor::initialize(string filename, Controller *c) {
+	controller = c;		// Allows this Floor to access the Controller
 	string line;		// Holds a line, skipping leading whitespace
 	char c;				// Holds each individual character, includes whitespace
 	int row = 0, col = 0;
 	while (getline(input, line)) {
 		istringstream iss(line);
 		while ((iss >> noskipws) >> c) {
-
+			
 		}
 	}
 }
