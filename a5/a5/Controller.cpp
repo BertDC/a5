@@ -36,19 +36,24 @@ void Controller::play() {
 			}
 			// If a race is selected, begin the floor 
 			else if (cmd == "s") {
-				floor[currentLevel]->initialize("shade", this, file);
+				string ch = "shade";
+				floor[currentLevel]->initialize(ch, this, file);
 			}
 			else if (cmd == "d") {
-				floor[currentLevel]->initialize("drow", this, file);
+				string ch = "drow";
+				floor[currentLevel]->initialize(ch, this, file);
 			}
 			else if (cmd == "v") {
-				floor[currentLevel]->initialize("vampire", this, file);
+				string ch = "vampire";
+				floor[currentLevel]->initialize(ch, this, file);
 			}
 			else if (cmd == "t") {
-				floor[currentLevel]->initialize("troll", this, file);
+				string ch = "troll";
+				floor[currentLevel]->initialize(ch, this, file);
 			}
 			else if (cmd == "g") {
-				floor[currentLevel]->initialize("goblin", this, file);
+				string ch = "goblin";
+				floor[currentLevel]->initialize(ch, this, file);
 			}
 		}
 		// The normal commands that can be issued when the game has started

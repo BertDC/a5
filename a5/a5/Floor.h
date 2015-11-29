@@ -6,6 +6,8 @@
 #include <vector>
 #include <istream>
 
+class Controller;
+
 class Pos {
 public:
 	Pos(int x, int y);
@@ -27,7 +29,7 @@ public:
 	~Floor();
 
 	void initialize(std::string, Controller *, std::fstream *);
-	void makeMove(std::string);
+	//void makeMove(std::string);
 	void generatePlayer(std::string);
 	void generatePotion();
 	void generateStairs();
@@ -38,8 +40,8 @@ public:
 	void addToChamber(int, int, int);			// Adds a cell at grid[row][col] to a chamber
 	void addNeighbours(int, int, int);			// Adds the neighbours of grid[row][col] to the chamber
 	void print();								// prints out the floor layout
-	void isAlive();								// returns the isAlive 
-	bool checkLife();							// Check's the player's life total
+	//void isAlive();								// returns the isAlive 
+	//bool checkLife();							// Check's the player's life total
 };
 
 #endif

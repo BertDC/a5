@@ -3,11 +3,12 @@
 
 
 
-Player::Player(int x, int y, Floor *flr) : Creature(x, y, '@')
+Player::Player(int x, int y, int ch, Floor *flr) : Creature(x, y, '@')
 {
 	atkMod = 0;
 	defMod = 0;
 	floor = flr;
+	chamber = ch;
 }
 
 

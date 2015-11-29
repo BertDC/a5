@@ -1,5 +1,3 @@
-#include "Floor.h"
-#include "cell.h"
 #include "Controller.h"
 using namespace std;
 

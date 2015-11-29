@@ -1,7 +1,8 @@
+#ifndef CREATURE_H
+#define CREATURE_H
 #include "cell.h"
 
-#pragma once
-class Creature : public cell
+class Creature : public Cell
 {
 protected:
 	int hp;			//Current health of a creature
@@ -17,4 +18,6 @@ public:
 	virtual void death();			//Called upon taking fatal damage
 	virtual int getDefense();		//Returns def Integer
 };
+
+#endif
 

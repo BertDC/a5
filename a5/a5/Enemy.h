@@ -1,6 +1,7 @@
+#ifndef ENEMY_H
+#define ENEMY_H
 #include "Creature.h"
 
-#pragma once
 class Enemy : public Creature
 {
 protected:
@@ -10,4 +11,6 @@ public:
 	Enemy(int, int, char);
 	~Enemy();
 };
+
+#endif
 

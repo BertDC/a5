@@ -1,12 +1,16 @@
+#ifndef SHADE_H
+#define SHADE_H
 #include "Player.h"
 
-#pragma once
 class Shade : public Player
 {
 private:
 	int maxHp;
 public:
-	Shade(int, int, Floor*);
+	Shade(int, int, int, Floor*);
 	~Shade();
+	void movement();
 };
+
+#endif
 

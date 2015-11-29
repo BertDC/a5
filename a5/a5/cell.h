@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CELL_H
+#define CELL_H
 class Cell
 {
 protected:
@@ -15,4 +16,6 @@ public:
 	bool inChamber;			// Whether the Cell has already been added to a chamber or not
 	char getSymbol();		// Returns the symbol associated to this cell
 };
+
+#endif
 

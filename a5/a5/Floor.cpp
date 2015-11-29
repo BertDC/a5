@@ -188,7 +188,7 @@ void Floor::generatePlayer(string race) {
 		// Delete whichever floor cell was previously there
 		delete grid[posRow][posCol];
 		// Makes the new player character at that position
-		grid[posRow][posCol] = new Shade(posRow, posCol, this);
+		grid[posRow][posCol] = new Shade(posRow, posCol, chamberSpawn, this);
 	}
 	else if (race == "drow") {
 
@@ -204,6 +204,26 @@ void Floor::generatePlayer(string race) {
 	}
 }
 
+void Floor::generatePotion() {
+
+}
+
+void Floor::generateStairs() {
+
+}
+
+void Floor::generateGold() {
+
+}
+
+void Floor::generateEnemy() {
+
+}
+
+void Floor::clearFloor() {
+
+}
+
 void Floor::print() {
 	// goes through the Cell grid and prints out the symbol
 	for (int i = 0; i < 25; i++) {
@@ -213,5 +233,5 @@ void Floor::print() {
 		cout << endl;	// newline (end of row)
 	}
 	// Outputs the 5 lines of Character info
-	player->printStats();
+	//player->printStats();
 }
