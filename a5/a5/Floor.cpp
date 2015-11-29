@@ -1,4 +1,5 @@
 #include "Floor.h"
+#include "cell.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -34,7 +35,7 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 			*file >> noskipws >> ch;
 			// Checks each of the valid characters and makes the required Cell
 			if (ch == '|') {
-
+				grid[row][col] = new Cell(row, col, ch);
 			}
 			else if (ch == '-') {
 
@@ -108,7 +109,18 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 	// If it wasn't a predetermined map, then we generate the players/enemies in the correct order
 	generatePlayer(race);
 	generateStairs();
-
+	// generate 10 potions randomly
+	for (int i = 0; i < 20; i++) {
+		generatePotion();
+	}
+	// generate 20 enemies
+	for (int i = 0; i < 20; i++) {
+		generateGold();
+	}
+	// generate 20 enemies
+	for (int i = 0; i < 20; i++) {
+		generateEnemy();
+	}
 
 }
 

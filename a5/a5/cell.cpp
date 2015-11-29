@@ -2,7 +2,7 @@
 
 
 
-cell::cell(int x, int y, char sym)
+Cell::Cell(int x, int y, char sym)
 {
 	posX = x;
 	posY = y;
@@ -10,7 +10,7 @@ cell::cell(int x, int y, char sym)
 	moves = false;
 }
 
-cell::cell(int x, int y, char sym, bool move)
+Cell::Cell(int x, int y, char sym, bool move)
 {
 	posX = x;
 	posY = y;
@@ -19,6 +19,6 @@ cell::cell(int x, int y, char sym, bool move)
 }
 
 
-cell::~cell()
+Cell::~Cell()
 {
 }

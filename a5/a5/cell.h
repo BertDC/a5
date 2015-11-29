@@ -1,5 +1,5 @@
 #pragma once
-class cell
+class Cell
 {
 protected:
 	int posX;
@@ -8,8 +8,8 @@ protected:
 	bool moves;
 
 public:
-	cell(int, int, char);
-	cell(int, int, char, bool);
-	~cell();
+	Cell(int, int, char);
+	Cell(int, int, char, bool);
+	~Cell();
 };
 
