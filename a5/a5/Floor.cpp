@@ -93,7 +93,6 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 			ss >> noskipws >> ch;
 			// Checks each of the valid characters and makes the required Cell
 			if (ch == '|' || ch == '-' || ch == ' ' || ch == '+' || ch == '#' || ch == '.' || ch == '\\') {
-				cerr << "adding " << ch << " character." << endl;
 				grid[row][col] = new Cell(row, col, ch);
 			}
 			else if (ch == '@') {
@@ -156,7 +155,6 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 
 	// Now we setup up the chambers once, which will be used for the rest of the floor
 	makeChambers();
-	cerr << "chambers successfully initialized" << endl;
 
 	// If it wasn't a predetermined map, then we generate the players/enemies in the correct order
 	generatePlayer(race);

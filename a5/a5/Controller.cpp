@@ -176,5 +176,9 @@ void Controller::play() {
 		else if (cmd == "q") {
 			break;
 		}
+		// Debug (prints the floor)
+		else if (cmd == "p") {
+			floor[currentLevel]->print();
+		}
 	}
 }
