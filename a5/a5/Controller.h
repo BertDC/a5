@@ -14,8 +14,7 @@ public:
 	~Controller();
 
 	void play();
-	void makeMove(std::string);
-	void newFloor();
+	
 };
 
 #endif
