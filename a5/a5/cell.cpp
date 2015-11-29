@@ -8,6 +8,7 @@ Cell::Cell(int x, int y, char sym)
 	posY = y;
 	symbol = sym;
 	moves = false;
+	inChamber = false;
 }
 
 Cell::Cell(int x, int y, char sym, bool move)
@@ -16,9 +17,15 @@ Cell::Cell(int x, int y, char sym, bool move)
 	posY = y;
 	symbol = sym;
 	moves = true;
+	inChamber = false;
 }
 
 
 Cell::~Cell()
 {
 }
+
+char Cell::getSymbol() {
+	return symbol;
+}
+

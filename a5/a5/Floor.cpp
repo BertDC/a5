@@ -1,10 +1,17 @@
 #include "Floor.h"
+#include "Shade.h"
 #include "cell.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
+
+// The Position class
+Pos::Pos(int x, int y) : row(x), col(y) { }
+Pos::~Pos() { }
 
 // The only constructor
 Floor::Floor(int level) : level(level), grid(NULL), player(NULL), alive(true) { }
@@ -18,6 +25,53 @@ Floor::~Floor() {
 		delete grid[row];
 	}
 	delete grid;
+}
+
+// Adds the neighbours of a Cell to the chamber if required
+void Floor::addNeighbours(int row, int col, int chamber) {
+	// Goes through 4 neighbours and adds them the chamber if it can
+	char c1 = grid[row + 1][col]->getSymbol();
+	char c2 = grid[row - 1][col]->getSymbol();
+	char c3 = grid[row][col + 1]->getSymbol();
+	char c4 = grid[row][col - 1]->getSymbol();
+	if (c1 != '|' && c1 != '-' && c1 != ' ' && c1 != '#' && c1 != '+') {
+		addToChamber(row + 1, col, chamber);
+	}
+	if (c2 != '|' && c2 != '-' && c2 != ' ' && c2 != '#' && c2 != '+') {
+		addToChamber(row - 1, col, chamber);
+	}
+	if (c3 != '|' && c3 != '-' && c3 != ' ' && c3 != '#' && c3 != '+') {
+		addToChamber(row, col + 1, chamber);
+	}
+	if (c4 != '|' && c4 != '-' && c4 != ' ' && c4 != '#' && c4 != '+') {
+		addToChamber(row, col - 1, chamber);
+	}
+}
+
+// Adds the position of a Cell to the Chamber if it has not already been added
+void Floor::addToChamber(int row, int col, int chamber) {
+	if (grid[row][col]->inChamber) return;		// This cell is already part of a chamber
+	// Otherwise...
+	Pos * position = new Pos(row, col);
+	chambers[chamber].push_back(*position);			// adds the position to the Chamber
+	grid[row][col]->inChamber = true;
+
+	// Now we add the neighbours
+	addNeighbours(row, col, chamber);
+}
+
+// Starts the process to make the 5 chambers.
+void Floor::makeChambers() {
+	int chamber = 0;
+	for (int row = 0; row < 25; row++) {
+		for (int col = 0; col < 79; col++) {
+			// If we find a floor tile that is not currently part of a chamber, add it to that chamber;
+			if (grid[row][col]->getSymbol() == '.' && !grid[row][col]->inChamber) {
+				addToChamber(row, col, chamber);
+				chamber++;  // The next empty tile we find will be part of the next chamber.
+			}
+		}
+	}
 }
 
 // Sets up the floor
@@ -34,26 +88,11 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 			// Read in a character
 			*file >> noskipws >> ch;
 			// Checks each of the valid characters and makes the required Cell
-			if (ch == '|') {
+			if (ch == '|' || ch == '-' || ch == ' ' || ch == '+' || ch == '#' || ch == '\\') {
 				grid[row][col] = new Cell(row, col, ch);
 			}
-			else if (ch == '-') {
-
-			}
-			else if (ch == ' ') {
-
-			}
-			else if (ch == '+') {
-
-			}
-			else if (ch == '#') {
-
-			}
-			else if (ch == '\\') {
-
-			}
 			else if (ch == '@') {
-
+				
 			}
 			else if (ch == '0') {
 
@@ -103,18 +142,26 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 			else if (ch == 'D') {
 
 			}
+			// Debugging warning.... just incase something slips
+			else {
+				cerr << "WARNING: NOT ALL CELLS ARE INITIALIZED (character in question:  " << ch << endl;
+			}
 		}
 	}
+
+	// Now we setup up the chambers once, which will be used for the rest of the floor
+	makeChambers();
+	cerr << "chambers successfully initialized" << endl;
 
 	// If it wasn't a predetermined map, then we generate the players/enemies in the correct order
 	generatePlayer(race);
 	generateStairs();
 	// generate 10 potions randomly
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 10; i++) {
 		generatePotion();
 	}
-	// generate 20 enemies
-	for (int i = 0; i < 20; i++) {
+	// generate 10 gold piles
+	for (int i = 0; i < 10; i++) {
 		generateGold();
 	}
 	// generate 20 enemies
@@ -122,6 +169,39 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 		generateEnemy();
 	}
 
+}
+
+void Floor::generatePlayer(string race) {
+	srand(time(NULL));		// random seed
+
+	// The following computes a random number which determines which Chamber to spawn in,
+	// then computes a random number which determines the actual location of spawning within the chamber
+
+	int chamberSpawn = rand() % 5;		// Random number between 0 and 4 to determine which chamber to spawn in.
+	int randIndex = rand() % chambers[chamberSpawn].size();		// Random Cell from the Random Chamber
+
+	int posRow = chambers[chamberSpawn].at(randIndex).row;		// the row of the random location
+	int posCol = chambers[chamberSpawn].at(randIndex).col;		// the column of the random location
+
+	// Determine the race and generate it randomly!
+	if (race == "shade") {
+		// Delete whichever floor cell was previously there
+		delete grid[posRow][posCol];
+		// Makes the new player character at that position
+		grid[posRow][posCol] = new Shade(posRow, posCol, this);
+	}
+	else if (race == "drow") {
+
+	}
+	else if (race == "vampire") {
+
+	}
+	else if (race == "troll") {
+
+	}
+	else if (race == "goblin") {
+
+	}
 }
 
 void Floor::print() {
