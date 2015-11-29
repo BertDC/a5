@@ -14,11 +14,6 @@ Controller::~Controller() {
 
 }
 
-// Calls the Floor's move method with a given 
-void Controller::makeMove(string loc) {
-
-}
-
 // Starts the game
 void Controller::play() {
 	string cmd;
@@ -41,54 +36,126 @@ void Controller::play() {
 			}
 			// If a race is selected, begin the floor 
 			else if (cmd == "s") {
-
+				floor[currentLevel]->initialize("shade", this, file);
 			}
 			else if (cmd == "d") {
-
+				floor[currentLevel]->initialize("drow", this, file);
 			}
 			else if (cmd == "v") {
-
+				floor[currentLevel]->initialize("vampire", this, file);
 			}
 			else if (cmd == "t") {
-
+				floor[currentLevel]->initialize("troll", this, file);
 			}
 			else if (cmd == "g") {
-
+				floor[currentLevel]->initialize("goblin", this, file);
 			}
 		}
 		// The normal commands that can be issued when the game has started
-		// Movement
+
+		// Move North
 		else if (cmd == "no") {
 
 		}
+		// Move South
 		else if (cmd == "so") {
 
 		}
+		// Move East
 		else if (cmd == "ea") {
 
 		}
+		// Move West
 		else if (cmd == "we") {
 
 		}
+		// Move North-East
 		else if (cmd == "ne") {
 
 		}
+		// Move North-West
 		else if (cmd == "nw") {
 
 		}
+		// Move South-East
 		else if (cmd == "se") {
 
 		}
+		// Move South-West
 		else if (cmd == "sw") {
 
 		}
-		// potion
+		// Use potion
 		else if (cmd == "u") {
+			cin >> cmd;
+			// Use North
+			if (cmd == "no") {
 
+			}
+			// Use South
+			else if (cmd == "so") {
+
+			}
+			// Use East
+			else if (cmd == "ea") {
+
+			}
+			// Use West
+			else if (cmd == "we") {
+
+			}
+			// Use North-East
+			else if (cmd == "ne") {
+
+			}
+			// Use North-West
+			else if (cmd == "nw") {
+
+			}
+			// Use South-East
+			else if (cmd == "se") {
+
+			}
+			// Use South-West
+			else if (cmd == "sw") {
+
+			}
 		}
-		// attack
+		// Attack a location
 		else if (cmd == "a") {
+			cin >> cmd;
+			// Attack North
+			if (cmd == "no") {
 
+			}
+			// Attack South
+			else if (cmd == "so") {
+
+			}
+			// Attack East
+			else if (cmd == "ea") {
+
+			}
+			// Attack West
+			else if (cmd == "we") {
+
+			}
+			// Attack North-East
+			else if (cmd == "ne") {
+
+			}
+			// Attack North-West
+			else if (cmd == "nw") {
+
+			}
+			// Attack South-East
+			else if (cmd == "se") {
+
+			}
+			// Attack South-West
+			else if (cmd == "sw") {
+
+			}
 		}
 		// reset
 		else if (cmd == "r") {
