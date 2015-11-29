@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
 #include <cstdlib>
 #include <ctime>
 
@@ -78,17 +79,21 @@ void Floor::makeChambers() {
 void Floor::initialize(string race, Controller *c, fstream *file) {
 	controller = c;		// Allows this Floor to access the Controller
 	char ch;				// Holds each individual character, includes whitespace
+	string line;			// Holds a row from the file
 	grid = new Cell**[25];		// 25 rows
 	for (int i = 0; i < 25; i++) {
 		grid[i] = new Cell*[79];	// 79 columns
 	}
 	// Now we initialize each Cell to the corresponding Object, based off of what we read in from file
 	for (int row = 0; row < 25; row++) {
+		getline(*file, line);
+		stringstream ss(line);
 		for (int col = 0; col < 79; col++) {
 			// Read in a character
-			*file >> noskipws >> ch;
+			ss >> noskipws >> ch;
 			// Checks each of the valid characters and makes the required Cell
-			if (ch == '|' || ch == '-' || ch == ' ' || ch == '+' || ch == '#' || ch == '\\') {
+			if (ch == '|' || ch == '-' || ch == ' ' || ch == '+' || ch == '#' || ch == '.' || ch == '\\') {
+				cerr << "adding " << ch << " character." << endl;
 				grid[row][col] = new Cell(row, col, ch);
 			}
 			else if (ch == '@') {

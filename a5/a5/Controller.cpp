@@ -7,6 +7,7 @@ using namespace std;
 // The default controller ctor. Enables reading in from a file
 Controller::Controller(string filename) : currentLevel(0) {
 	file = new fstream(filename.c_str());
+	floor[0] = new Floor(currentLevel);
 }
 
 
@@ -38,22 +39,27 @@ void Controller::play() {
 			else if (cmd == "s") {
 				string ch = "shade";
 				floor[currentLevel]->initialize(ch, this, file);
+				floor[currentLevel]->print();
 			}
 			else if (cmd == "d") {
 				string ch = "drow";
 				floor[currentLevel]->initialize(ch, this, file);
+				floor[currentLevel]->print();
 			}
 			else if (cmd == "v") {
 				string ch = "vampire";
 				floor[currentLevel]->initialize(ch, this, file);
+				floor[currentLevel]->print();
 			}
 			else if (cmd == "t") {
 				string ch = "troll";
 				floor[currentLevel]->initialize(ch, this, file);
+				floor[currentLevel]->print();
 			}
 			else if (cmd == "g") {
 				string ch = "goblin";
 				floor[currentLevel]->initialize(ch, this, file);
+				floor[currentLevel]->print();
 			}
 		}
 		// The normal commands that can be issued when the game has started

@@ -7,6 +7,7 @@
 #include <istream>
 
 class Controller;
+class Player;
 
 class Pos {
 public:
