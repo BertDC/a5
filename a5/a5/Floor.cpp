@@ -191,7 +191,8 @@ void Floor::generatePlayer(string race) {
 		// Delete whichever floor cell was previously there
 		delete grid[posRow][posCol];
 		// Makes the new player character at that position
-		grid[posRow][posCol] = new Shade(posRow, posCol, chamberSpawn, this);
+		player = new Shade(posRow, posCol, chamberSpawn, this);
+		grid[posRow][posCol] = player;
 	}
 	else if (race == "drow") {
 
@@ -230,7 +231,16 @@ void Floor::clearFloor() {
 // Handles player movement
 void Floor::playerMove(string location) {
 	// simply calls the virtual movement() method for the player
-	player->movement(location);
+	cerr << "beginning the move..." << endl;
+	bool moved = player->movement(location);
+	// If the move was successful, we move the enemies and print the floor
+	if (moved) {
+		// makes the enemy's turn
+		cerr << "successful move" << endl;
+		// prints the floor
+		print();
+	}
+	else cerr << "failed move" << endl;
 }
 
 

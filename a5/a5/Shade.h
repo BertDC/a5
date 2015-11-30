@@ -9,7 +9,6 @@ private:
 public:
 	Shade(int, int, int, Floor*);
 	~Shade();
-	void movement(std::string);
 };
 
 #endif

@@ -25,7 +25,7 @@ int Creature::getDefense() {
 	return def;
 }
 
-void Creature::movement() {
+/*void Creature::movement() {
 	//We need to discuss how creature movement works again. For this method to work then creatures need access to the Cell array
 	while (true) {
 		break;
@@ -42,10 +42,10 @@ void Creature::movement() {
 		posY = y;
 
 		}
-		*/
+		
 		
 	}
-}
+}*/
 
 void Creature::death() {
 

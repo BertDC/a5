@@ -40,26 +40,31 @@ void Controller::play() {
 				string ch = "shade";
 				floor[currentLevel]->initialize(ch, this, file);
 				floor[currentLevel]->print();
+				hasSelected = true;
 			}
 			else if (cmd == "d") {
 				string ch = "drow";
 				floor[currentLevel]->initialize(ch, this, file);
 				floor[currentLevel]->print();
+				hasSelected = true;
 			}
 			else if (cmd == "v") {
 				string ch = "vampire";
 				floor[currentLevel]->initialize(ch, this, file);
 				floor[currentLevel]->print();
+				hasSelected = true;
 			}
 			else if (cmd == "t") {
 				string ch = "troll";
 				floor[currentLevel]->initialize(ch, this, file);
 				floor[currentLevel]->print();
+				hasSelected = true;
 			}
 			else if (cmd == "g") {
 				string ch = "goblin";
 				floor[currentLevel]->initialize(ch, this, file);
 				floor[currentLevel]->print();
+				hasSelected = true;
 			}
 		}
 		// The normal commands that can be issued when the game has started

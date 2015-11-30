@@ -15,11 +15,11 @@ protected:
 	
 public:
 	Player(int, int, int, Floor*);
+	virtual ~Player() = 0;
 	int getChamber();
-	virtual ~Player();
 	virtual int getDefense();
 	virtual void attack(Creature *);
-	virtual void movement(std::string) = 0;
+	virtual bool movement(std::string);
 };
 
 #endif
