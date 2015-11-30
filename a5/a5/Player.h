@@ -1,11 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include "Floor.h"
 #include "Creature.h"
+#include "Floor.h"
+#include <string>
 
 class Floor;
-class Player : public Creature
-{
+class Player : public Creature {
 protected:
 	int atkMod;			//Potion caused buff/debuff to attack for current floor
 	int defMod;			//Potion caused buff/debuff to defense for current floor

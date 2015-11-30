@@ -3,7 +3,7 @@
 
 
 
-Player::Player(int x, int y, int ch, Floor *flr) : Creature(x, y, '@')
+Player::Player(int x, int y, int ch, Floor *flr) : Creature(x, y, '@', flr)
 {
 	atkMod = 0;
 	defMod = 0;
