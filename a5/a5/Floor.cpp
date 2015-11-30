@@ -231,16 +231,13 @@ void Floor::clearFloor() {
 // Handles player movement
 void Floor::playerMove(string location) {
 	// simply calls the virtual movement() method for the player
-	cerr << "beginning the move..." << endl;
 	bool moved = player->movement(location);
 	// If the move was successful, we move the enemies and print the floor
 	if (moved) {
 		// makes the enemy's turn
-		cerr << "successful move" << endl;
 		// prints the floor
 		print();
 	}
-	else cerr << "failed move" << endl;
 }
 
 

@@ -29,7 +29,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX][posY - 1];
 			floor->grid[posX][posY - 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '.');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '.';
 			posX = posX;
@@ -40,7 +40,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX][posY - 1];
 			floor->grid[posX][posY - 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '+');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '+';
 			posX = posX;
@@ -51,7 +51,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX][posY - 1];
 			floor->grid[posX][posY - 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '#');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
 			posX = posX;
@@ -70,7 +70,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX][posY + 1];
 			floor->grid[posX][posY + 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '.');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '.';
 			posX = posX;
@@ -81,7 +81,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX][posY + 1];
 			floor->grid[posX][posY + 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '+');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '+';
 			posX = posX;
@@ -92,7 +92,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX][posY + 1];
 			floor->grid[posX][posY + 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '#');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
 			posX = posX;
@@ -111,7 +111,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX + 1][posY];
 			floor->grid[posX + 1][posY] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '.');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '.';
 			posX = posX + 1;
@@ -122,7 +122,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX + 1][posY];
 			floor->grid[posX + 1][posY] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '+');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '+';
 			posX = posX + 1;
@@ -133,7 +133,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX + 1][posY];
 			floor->grid[posX + 1][posY] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '#');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
 			posX = posX + 1;
@@ -152,7 +152,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX - 1][posY];
 			floor->grid[posX - 1][posY] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '.');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '.';
 			posX = posX - 1;
@@ -163,7 +163,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX - 1][posY];
 			floor->grid[posX - 1][posY] = this;
-			floor->grid[posX - 1][posY] = new Cell(posX, posY, '+');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '+';
 			posX = posX - 1;
@@ -174,7 +174,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX - 1][posY];
 			floor->grid[posX - 1][posY] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '#');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
 			posX = posX - 1;
@@ -193,7 +193,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX - 1][posY - 1];
 			floor->grid[posX - 1][posY - 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '.');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '.';
 			posX = posX - 1;
@@ -204,7 +204,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX - 1][posY - 1];
 			floor->grid[posX - 1][posY - 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '+');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '+';
 			posX = posX - 1;
@@ -215,7 +215,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX - 1][posY - 1];
 			floor->grid[posX - 1][posY - 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '#');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
 			posX = posX - 1;
@@ -234,7 +234,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX + 1][posY - 1];
 			floor->grid[posX + 1][posY - 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '.');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '.';
 			posX = posX + 1;
@@ -245,7 +245,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX + 1][posY - 1];
 			floor->grid[posX + 1][posY - 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '+');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '+';
 			posX = posX + 1;
@@ -256,7 +256,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX + 1][posY - 1];
 			floor->grid[posX + 1][posY - 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '#');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
 			posX = posX + 1;
@@ -275,7 +275,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX - 1][posY + 1];
 			floor->grid[posX - 1][posY + 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '.');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '.';
 			posX = posX - 1;
@@ -286,7 +286,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX - 1][posY + 1];
 			floor->grid[posX - 1][posY + 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '+');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '+';
 			posX = posX - 1;
@@ -297,7 +297,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX - 1][posY + 1];
 			floor->grid[posX - 1][posY + 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '#');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
 			posX = posX - 1;
@@ -316,7 +316,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX + 1][posY + 1];
 			floor->grid[posX + 1][posY + 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '.');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '.';
 			posX = posX + 1;
@@ -327,7 +327,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX + 1][posY + 1];
 			floor->grid[posX + 1][posY + 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '+');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '+';
 			posX = posX + 1;
@@ -338,7 +338,7 @@ bool Player::movement(string location) {
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX + 1][posY + 1];
 			floor->grid[posX + 1][posY + 1] = this;
-			floor->grid[posX][posY] = new Cell(posX, posY, '#');
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
 			posX = posX + 1;
