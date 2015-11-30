@@ -10,7 +10,6 @@ class Enemy : public Creature
 {
 protected:
 	bool hostile;
-	int maxHp;
 public:
 	Enemy(int, int, char, Floor *);
 	~Enemy();

@@ -361,6 +361,57 @@ void Player::attack(Creature *defender) {
 	defender->loseHp(damage);
 }
 
+std::string Player::consumePotion(std::string dir) {
+	int x = posX;
+	int y = posY;
+	string message;
+	if (dir == "no" || dir == "ne" || dir == "nw")
+		x -= 1;
+	else if (dir == "so" || dir == "se" || dir == "sw")
+		x += 1;
+	if (dir == "ea" || dir == "ne" || dir == "se")
+		y += 1;
+	else if (dir == "we" || dir == "sw" || dir == "nw")
+		y -= 1;
+	if (floor->grid[x][y]->getSymbol() != 'P') {
+		return "No potion found!";
+	}
+	int type = floor->grid[x][y]->getType();
+	//Potion effects take place depending on type consumed
+	if (type == 0) {
+		loseHp(10);
+		message = "You feel sick! Lost 10 health.";
+	}
+	else if (type == 1) {
+		hp = fmin(maxHp, hp + 10);
+		message = "You feel rejuvenated! Gain +10 health.";
+	}
+	else if (type == 2) {
+		atkMod -= 5;
+		message = "You feel tired... Lose 5 attack.";
+	}
+	else if (type == 3) {
+		atkMod += 5;
+		message = "You feel stronger!! Gain 5 attack!";
+	}
+	else if (type == 4) {
+		defMod -= 5;
+		message = "You feel weak. Lose 5 defense.";
+	}
+	else if (type == 5) {
+		defMod += 5;
+		message = "You feel your skin harden. Odd. Gain 5 defense.";
+	}
+	else if (type == 6) {
+		message = "One problem down";
+	}
+	//Player will recognize the consumed potion from this point onwards
+	knownPots[type] = true;
+	delete floor->grid[x][y];
+	floor->grid[x][y] = new Cell(x, y, '.');
+	return message;
+}
+
 int Player::getDefense() {
 	return def + defMod;
 }

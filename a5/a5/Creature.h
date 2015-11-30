@@ -8,6 +8,7 @@ class Creature : public Cell
 {
 protected:
 	int hp;			//Current health of a creature
+	int maxHp;		//Maximum possible health of a creature
 	int atk;		//Base attack stat of a creature
 	int def;		//Base defense sta of a creature
 	Floor *floor;	//Pointer to the current active floor object

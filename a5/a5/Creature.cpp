@@ -12,8 +12,10 @@ Creature::~Creature() {
 
 void Creature::loseHp(int damage) {
 	hp -= damage;
-	if (hp <= 0)
+	if (hp <= 0) {
+		hp = 0;
 		death();
+	}
 }
 
 void Creature::attack(Creature *defender) {

@@ -30,6 +30,7 @@ public:
 	Cell ***grid;					// 2d-array containing each individual cell* in the map layout
 	void initialize(std::string, Controller *, std::fstream *);
 	void playerMove(std::string);
+	void playerUse(std::string);
 	void generatePlayer(std::string);
 	void generatePotion();
 	void generateStairs();

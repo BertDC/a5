@@ -210,6 +210,24 @@ void Floor::generatePlayer(string race) {
 
 void Floor::generatePotion() {
 
+	// The following computes a random number which determines which Chamber to spawn in,
+	// then computes a random number which determines the actual location of spawning within the chamber
+		int chamberSpawn = rand() % 5;		// Random number between 0 and 4 to determine which chamber to spawn in.
+		int randIndex; 		// Random Cell from the Random Chamber
+		int posRow, posCol;
+		while (true) {
+			randIndex = rand() % chambers[chamberSpawn].size();
+			posRow = chambers[chamberSpawn].at(randIndex).row;		// the row of the random location
+			posCol = chambers[chamberSpawn].at(randIndex).col;		// the column of the random location
+			if (grid[posRow][posCol]->getSymbol() == '.')
+				break;
+		}
+
+		// Delete whichever floor cell was previously there
+		delete grid[posRow][posCol];
+		// Makes the new player character at that position
+		grid[posRow][posCol] = new Potion(posRow, posCol, (rand() % 6));
+		
 }
 
 void Floor::generateStairs() {
@@ -240,6 +258,13 @@ void Floor::playerMove(string location) {
 	}
 }
 
+void Floor::playerUse(string direction) {
+	string message = player->consumePotion(direction);
+		// makes the enemy's turn
+		// prints the floor
+		print();
+		cout << message << endl;
+}
 
 void Floor::print() {
 	// goes through the Cell grid and prints out the symbol

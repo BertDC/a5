@@ -106,35 +106,35 @@ void Controller::play() {
 			cin >> cmd;
 			// Use North
 			if (cmd == "no") {
-
+				floor[currentLevel]->playerUse(cmd);
 			}
 			// Use South
 			else if (cmd == "so") {
-
+				floor[currentLevel]->playerUse(cmd);
 			}
 			// Use East
 			else if (cmd == "ea") {
-
+				floor[currentLevel]->playerUse(cmd);
 			}
 			// Use West
 			else if (cmd == "we") {
-
+				floor[currentLevel]->playerUse(cmd);
 			}
 			// Use North-East
 			else if (cmd == "ne") {
-
+				floor[currentLevel]->playerUse(cmd);
 			}
 			// Use North-West
 			else if (cmd == "nw") {
-
+				floor[currentLevel]->playerUse(cmd);
 			}
 			// Use South-East
 			else if (cmd == "se") {
-
+				floor[currentLevel]->playerUse(cmd);
 			}
 			// Use South-West
 			else if (cmd == "sw") {
-
+				floor[currentLevel]->playerUse(cmd);
 			}
 		}
 		// Attack a location

@@ -2,6 +2,7 @@
 #define PLAYER_H
 #include "Creature.h"
 #include "Floor.h"
+#include "Potion.h"
 #include <string>
 
 class Floor;
@@ -20,6 +21,7 @@ public:
 	virtual int getDefense();
 	virtual void attack(Creature *);
 	virtual bool movement(std::string);
+	virtual std::string consumePotion(std::string);
 };
 
 #endif

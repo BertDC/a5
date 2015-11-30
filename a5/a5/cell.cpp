@@ -27,3 +27,7 @@ char Cell::getSymbol() {
 	return symbol;
 }
 
+int Cell::getType() {
+	return 6;
+}
+
