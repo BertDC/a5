@@ -16,7 +16,6 @@ protected:
 public:
 	Creature(int, int, char, Floor *);
 	virtual ~Creature() = 0;
-	//virtual void movement();		//Default method randomly moves the creature by one square
 	virtual void attack(Creature*);
 	virtual void loseHp(int);		//Subtracts battle damage from current health value and determines if death occurs
 	virtual void death();			//Called upon taking fatal damage

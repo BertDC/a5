@@ -6,6 +6,9 @@ Gold::Gold(int x, int y, int s) : Item(x, y, 'G')
 	//comment
 }
 
+int Gold::getType() {
+	return size;
+}
 
 Gold::~Gold()
 {

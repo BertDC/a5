@@ -1,6 +1,7 @@
 #include "Floor.h"
 #include "Shade.h"
 #include "cell.h"
+#include "Gold.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -27,6 +28,8 @@ Floor::~Floor() {
 	}
 	delete grid;
 }
+
+int Floor::getLevel() { return level; }
 
 // Adds the neighbours of a Cell to the chamber if required
 void Floor::addNeighbours(int row, int col, int chamber) {
@@ -209,13 +212,14 @@ void Floor::generatePlayer(string race) {
 }
 
 void Floor::generatePotion() {
-
+	srand(time(NULL));		// random seed
 	// The following computes a random number which determines which Chamber to spawn in,
 	// then computes a random number which determines the actual location of spawning within the chamber
-		int chamberSpawn = rand() % 5;		// Random number between 0 and 4 to determine which chamber to spawn in.
-		int randIndex; 		// Random Cell from the Random Chamber
 		int posRow, posCol;
 		while (true) {
+			int chamberSpawn = rand() % 5;		// Random number between 0 and 4 to determine which chamber to spawn in.
+			int randIndex; 						// Random Cell from the Random Chamber
+
 			randIndex = rand() % chambers[chamberSpawn].size();
 			posRow = chambers[chamberSpawn].at(randIndex).row;		// the row of the random location
 			posCol = chambers[chamberSpawn].at(randIndex).col;		// the column of the random location
@@ -225,17 +229,82 @@ void Floor::generatePotion() {
 
 		// Delete whichever floor cell was previously there
 		delete grid[posRow][posCol];
-		// Makes the new player character at that position
+		// Makes the new potion at that position
 		grid[posRow][posCol] = new Potion(posRow, posCol, (rand() % 6));
 		
 }
 
+// Generates the stairs in a chamber without the Player
 void Floor::generateStairs() {
+	// Gets the player's chamber location
+	int playerChamber = chamberPos(player->getLocation());
+	if (playerChamber == -1) {
+		cerr << "Can't find player. Not spawning stairs..." << endl;
+		return;
+	}
+
+	int posRow;
+	int posCol;
+	// Randomly selects a chamber until it finds one without the player
+	while (true) {
+		int chamberSpawn = rand() % 5;								// Random number between 0 and 4 to determine which chamber to spawn in.
+		int randIndex = rand() % chambers[chamberSpawn].size();		// Random Cell from the Random Chamber
+		// If we chose the player's chamber. we try again
+		if (chamberSpawn == playerChamber) {
+			continue;
+		}
+		else {
+			posRow = chambers[chamberSpawn].at(randIndex).row;		// the row of the random location
+			posCol = chambers[chamberSpawn].at(randIndex).col;		// the column of the random location
+			if (grid[posRow][posCol]->getSymbol() == '.')			// ensures we don't overwrite another type
+				break;	// otherwise we have found a suitable chamber
+		}
+	}
+
+	// Delete whichever floor cell was previously there
+	delete grid[posRow][posCol];
+	// Makes the new potion at that position
+	grid[posRow][posCol] = new Cell(posRow, posCol, '\\');
 
 }
 
+// Generates a random gold size
 void Floor::generateGold() {
+	srand(time(NULL));		// random seed
 
+	// The following will randomly select a chamber and valid position for the gold to spawn,
+	// then randomly select the size of the Gold pile (according to the chances described in cc3k.pdf)
+	int posRow, posCol;
+	while (true) {
+		int chamberSpawn = rand() % 5;		// Random number between 0 and 4 to determine which chamber to spawn in.
+		int randIndex; 						// Random Cell from the Random Chamber
+
+		randIndex = rand() % chambers[chamberSpawn].size();
+		posRow = chambers[chamberSpawn].at(randIndex).row;		// the row of the random location
+		posCol = chambers[chamberSpawn].at(randIndex).col;		// the column of the random location
+		if (grid[posRow][posCol]->getSymbol() == '.')			// ensures we don't overwrite another type
+			break;
+	}
+
+	// Now that it has found a correct location, we determine the type of Gold and then spawn it
+	int size = 0;							// size of gold
+	int type = rand() % 8;					// random number between 0 and 7 for Gold odds
+	if (type >= 0 && type < 5) {			// 5 in 8 chances for normal
+		size = 2;
+	}
+	else if (type >= 5 && type < 7) {		// 2 in 8 chances for small
+		size = 1;
+	}
+	else {									// 1 in 8 chances for dragon hoard
+		size = 6;
+		// Spawns a dragon at the gold Hoard position
+		//spawnDragon(posRow, posCol, this, 'D');
+	}
+
+	// Delete whichever floor cell was previously there
+	delete grid[posRow][posCol];
+	// Makes the new potion at that position
+	grid[posRow][posCol] = new Gold(posRow, posCol, size);
 }
 
 void Floor::generateEnemy() {
@@ -244,6 +313,26 @@ void Floor::generateEnemy() {
 
 void Floor::clearFloor() {
 
+}
+
+// Given a position, returns which chamber it is in.
+int Floor::chamberPos(Pos pos) {
+	int x = pos.row;
+	int y = pos.col;
+
+	// Loops through each of the 5 chambers
+	for (int i = 0; i < 5; i++) {
+		// Loops through each position in this chamber
+		for (vector<Pos>::iterator it = chambers[i].begin(); it != chambers[i].end(); it++) {
+			Pos hold = *it;
+			// If the position matches, return the Chamber index
+			if (hold.row == x && hold.col == y) {
+				return i;
+			}
+		}
+	}
+	// if the position was not found, returns -1
+	return -1;
 }
 
 // Handles player movement
@@ -275,5 +364,5 @@ void Floor::print() {
 		cout << endl;	// newline (end of row)
 	}
 	// Outputs the 5 lines of Character info
-	//player->printStats();
+	player->printStats();
 }

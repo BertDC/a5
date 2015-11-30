@@ -41,7 +41,9 @@ public:
 	void addToChamber(int, int, int);			// Adds a cell at grid[row][col] to a chamber
 	void addNeighbours(int, int, int);			// Adds the neighbours of grid[row][col] to the chamber
 	void print();								// prints out the floor layout
-	//void isAlive();								// returns the isAlive 
+	int chamberPos(Pos);						// Given a position, returns which chamber its in
+	int getLevel();
+	//void isAlive();							// returns the isAlive 
 	//bool checkLife();							// Check's the player's life total
 };
 

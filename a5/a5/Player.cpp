@@ -4,12 +4,13 @@
 using namespace std;
 
 
-Player::Player(int x, int y, int ch, Floor *flr) : Creature(x, y, '@', flr)
-{
+Player::Player(int x, int y, int ch, Floor *flr) : Creature(x, y, '@', flr) {
 	atkMod = 0;
 	defMod = 0;
 	floor = flr;
 	chamber = ch;
+	gold = 0;
+	actionQueue = "";
 	prev = '.';
 }
 
@@ -18,14 +19,23 @@ int Player::getChamber() {
 	return chamber;
 }
 
-Player::~Player()
-{
+Player::~Player() {
+
 }
 
+// Prints the 5 lines of player stats
+void Player::printStats() {
+	cout << "Race: Shade " << " Gold: " << gold << "                                     Floor: " << floor->getLevel() << endl;
+	cout << "HP: " << hp << endl;
+	cout << "ATK: " << atk + atkMod << endl;
+	cout << "DEF: " << def + defMod << endl;
+	cout << "Action: " << actionQueue << endl;
+}
+
+// The movement of the Player class
 bool Player::movement(string location) {
 	if (location == "we") {
 		if (floor->grid[posX][posY - 1]->getSymbol() == '.') {
-			cout << "moving to ." << endl;
 			// creates the old tile the Player was on and swaps location
 			delete floor->grid[posX][posY - 1];
 			floor->grid[posX][posY - 1] = this;
@@ -54,6 +64,24 @@ bool Player::movement(string location) {
 			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
+			posX = posX;
+			posY = posY - 1;
+			return true;
+		}
+		// Player encounters a gold pile
+		if (floor->grid[posX][posY - 1]->getSymbol() == 'G') {
+			// determine size of gold
+			int size = floor->grid[posX][posY - 1]->getType();
+			// Dragon gold pile
+			if (floor->grid[posX][posY - 1]->getType() == 6) {
+				return false;
+			}
+			// If it isnt a dragon hoard, we pick up the gold and move onto its spot
+			gold += size;
+			delete floor->grid[posX][posY - 1];
+			floor->grid[posX][posY - 1] = this;
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
+			prev = '.';
 			posX = posX;
 			posY = posY - 1;
 			return true;
@@ -99,6 +127,24 @@ bool Player::movement(string location) {
 			posY = posY + 1;
 			return true;
 		}
+		// Player encounters a gold pile
+		if (floor->grid[posX][posY + 1]->getSymbol() == 'G') {
+			// determine size of gold
+			int size = floor->grid[posX][posY + 1]->getType();
+			// Dragon gold pile
+			if (floor->grid[posX][posY + 1]->getType() == 6) {
+				return false;
+			}
+			// If it isnt a dragon hoard, we pick up the gold and move onto its spot
+			gold += size;
+			delete floor->grid[posX][posY + 1];
+			floor->grid[posX][posY + 1] = this;
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
+			prev = '.';
+			posX = posX;
+			posY = posY + 1;
+			return true;
+		}
 		// Player encounters the stairs
 		if (floor->grid[posX][posY + 1]->getSymbol() == '\\') {
 			return true;
@@ -136,6 +182,24 @@ bool Player::movement(string location) {
 			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
+			posX = posX + 1;
+			posY = posY;
+			return true;
+		}
+		// Player encounters a gold pile
+		if (floor->grid[posX + 1][posY]->getSymbol() == 'G') {
+			// determine size of gold
+			int size = floor->grid[posX + 1][posY]->getType();
+			// Dragon gold pile
+			if (floor->grid[posX + 1][posY]->getType() == 6) {
+				return false;
+			}
+			// If it isnt a dragon hoard, we pick up the gold and move onto its spot
+			gold += size;
+			delete floor->grid[posX + 1][posY];
+			floor->grid[posX + 1][posY] = this;
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
+			prev = '.';
 			posX = posX + 1;
 			posY = posY;
 			return true;
@@ -181,6 +245,24 @@ bool Player::movement(string location) {
 			posY = posY;
 			return true;
 		}
+		// Player encounters a gold pile
+		if (floor->grid[posX - 1][posY]->getSymbol() == 'G') {
+			// determine size of gold
+			int size = floor->grid[posX - 1][posY]->getType();
+			// Dragon gold pile
+			if (floor->grid[posX - 1][posY]->getType() == 6) {
+				return false;
+			}
+			// If it isnt a dragon hoard, we pick up the gold and move onto its spot
+			gold += size;
+			delete floor->grid[posX - 1][posY];
+			floor->grid[posX - 1][posY] = this;
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
+			prev = '.';
+			posX = posX - 1;
+			posY = posY;
+			return true;
+		}
 		// Player encounters the stairs
 		if (floor->grid[posX - 1][posY]->getSymbol() == '\\') {
 			return true;
@@ -218,6 +300,24 @@ bool Player::movement(string location) {
 			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
+			posX = posX - 1;
+			posY = posY - 1;
+			return true;
+		}
+		// Player encounters a gold pile
+		if (floor->grid[posX - 1][posY - 1]->getSymbol() == 'G') {
+			// determine size of gold
+			int size = floor->grid[posX - 1][posY - 1]->getType();
+			// Dragon gold pile
+			if (floor->grid[posX - 1][posY - 1]->getType() == 6) {
+				return false;
+			}
+			// If it isnt a dragon hoard, we pick up the gold and move onto its spot
+			gold += size;
+			delete floor->grid[posX - 1][posY - 1];
+			floor->grid[posX - 1][posY - 1] = this;
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
+			prev = '.';
 			posX = posX - 1;
 			posY = posY - 1;
 			return true;
@@ -263,6 +363,24 @@ bool Player::movement(string location) {
 			posY = posY - 1;
 			return true;
 		}
+		// Player encounters a gold pile
+		if (floor->grid[posX + 1][posY - 1]->getSymbol() == 'G') {
+			// determine size of gold
+			int size = floor->grid[posX + 1][posY - 1]->getType();
+			// Dragon gold pile
+			if (floor->grid[posX + 1][posY - 1]->getType() == 6) {
+				return false;
+			}
+			// If it isnt a dragon hoard, we pick up the gold and move onto its spot
+			gold += size;
+			delete floor->grid[posX + 1][posY - 1];
+			floor->grid[posX + 1][posY - 1] = this;
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
+			prev = '.';
+			posX = posX + 1;
+			posY = posY - 1;
+			return true;
+		}
 		// Player encounters the stairs
 		if (floor->grid[posX + 1][posY - 1]->getSymbol() == '\\') {
 			return true;
@@ -304,6 +422,24 @@ bool Player::movement(string location) {
 			posY = posY + 1;
 			return true;
 		}
+		// Player encounters a gold pile
+		if (floor->grid[posX - 1][posY + 1]->getSymbol() == 'G') {
+			// determine size of gold
+			int size = floor->grid[posX - 1][posY + 1]->getType();
+			// Dragon gold pile
+			if (floor->grid[posX - 1][posY + 1]->getType() == 6) {
+				return false;
+			}
+			// If it isnt a dragon hoard, we pick up the gold and move onto its spot
+			gold += size;
+			delete floor->grid[posX - 1][posY + 1];
+			floor->grid[posX - 1][posY + 1] = this;
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
+			prev = '.';
+			posX = posX - 1;
+			posY = posY + 1;
+			return true;
+		}
 		// Player encounters the stairs
 		if (floor->grid[posX - 1][posY + 1]->getSymbol() == '\\') {
 			return true;
@@ -341,6 +477,24 @@ bool Player::movement(string location) {
 			floor->grid[posX][posY] = new Cell(posX, posY, prev);
 			// Updates the previous tile and position
 			prev = '#';
+			posX = posX + 1;
+			posY = posY + 1;
+			return true;
+		}
+		// Player encounters a gold pile
+		if (floor->grid[posX + 1][posY + 1]->getSymbol() == 'G') {
+			// determine size of gold
+			int size = floor->grid[posX + 1][posY + 1]->getType();
+			// Dragon gold pile
+			if (floor->grid[posX + 1][posY + 1]->getType() == 6) {
+				return false;
+			}
+			// If it isnt a dragon hoard, we pick up the gold and move onto its spot
+			gold += size;
+			delete floor->grid[posX + 1][posY + 1];
+			floor->grid[posX + 1][posY + 1] = this;
+			floor->grid[posX][posY] = new Cell(posX, posY, prev);
+			prev = '.';
 			posX = posX + 1;
 			posY = posY + 1;
 			return true;
@@ -410,6 +564,12 @@ std::string Player::consumePotion(std::string dir) {
 	delete floor->grid[x][y];
 	floor->grid[x][y] = new Cell(x, y, '.');
 	return message;
+}
+
+// Gets the player location
+Pos Player::getLocation() {
+	Pos pos(posX, posY);
+	return pos;
 }
 
 int Player::getDefense() {

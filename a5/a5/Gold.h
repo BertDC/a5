@@ -8,4 +8,5 @@ protected:
 public:
 	Gold(int, int, int);
 	~Gold();
+	int getType();
 };
