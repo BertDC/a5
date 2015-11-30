@@ -123,7 +123,11 @@
     <ClInclude Include="Creature.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="Gold.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Potion.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Shade.h" />
   </ItemGroup>
   <ItemGroup>
@@ -132,9 +136,18 @@
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="Gold.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Shade.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="a5.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="map.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
