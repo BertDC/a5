@@ -8,6 +8,6 @@ protected:
 	int type;
 public:
 	Potion(int, int, int);
+	int getType();
 	~Potion();
 };
-

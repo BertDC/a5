@@ -7,4 +7,3 @@ public:
 	Item(int, int, char);
 	~Item();
 };
-

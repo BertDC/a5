@@ -9,4 +9,3 @@ public:
 	Gold(int, int, int);
 	~Gold();
 };
-
