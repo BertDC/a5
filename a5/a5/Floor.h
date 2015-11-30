@@ -18,7 +18,7 @@ public:
 };
 
 class Floor {
-	Cell ***grid;					// 2d-array containing each individual cell* in the map layout
+	
 	Player *player;					// pointer to the Player abstract class
 	Controller *controller;			// Pointer so the Floor can interact with the Controller
 	int level;						// tracks the level of the this floor
@@ -29,8 +29,9 @@ public:
 	Floor(int);
 	~Floor();
 
+	Cell ***grid;					// 2d-array containing each individual cell* in the map layout
 	void initialize(std::string, Controller *, std::fstream *);
-	//void makeMove(std::string);
+	void playerMove(std::string);
 	void generatePlayer(std::string);
 	void generatePotion();
 	void generateStairs();

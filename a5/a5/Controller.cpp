@@ -66,35 +66,35 @@ void Controller::play() {
 
 		// Move North
 		else if (cmd == "no") {
-
+			floor[currentLevel]->playerMove(cmd);
 		}
 		// Move South
 		else if (cmd == "so") {
-
+			floor[currentLevel]->playerMove(cmd);
 		}
 		// Move East
 		else if (cmd == "ea") {
-
+			floor[currentLevel]->playerMove(cmd);
 		}
 		// Move West
 		else if (cmd == "we") {
-
+			floor[currentLevel]->playerMove(cmd);
 		}
 		// Move North-East
 		else if (cmd == "ne") {
-
+			floor[currentLevel]->playerMove(cmd);
 		}
 		// Move North-West
 		else if (cmd == "nw") {
-
+			floor[currentLevel]->playerMove(cmd);
 		}
 		// Move South-East
 		else if (cmd == "se") {
-
+			floor[currentLevel]->playerMove(cmd);
 		}
 		// Move South-West
 		else if (cmd == "sw") {
-
+			floor[currentLevel]->playerMove(cmd);
 		}
 		// Use potion
 		else if (cmd == "u") {

@@ -227,6 +227,11 @@ void Floor::clearFloor() {
 
 }
 
+// Handles player movement
+void Floor::playerMove(string location) {
+
+}
+
 void Floor::print() {
 	// goes through the Cell grid and prints out the symbol
 	for (int i = 0; i < 25; i++) {

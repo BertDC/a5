@@ -1,6 +1,9 @@
 #ifndef CREATURE_H
 #define CREATURE_H
 #include "cell.h"
+#include "Floor.h"
+
+class Floor;
 
 class Creature : public Cell
 {
@@ -8,9 +11,10 @@ protected:
 	int hp;			//Current health of a creature
 	int atk;		//Base attack stat of a creature
 	int def;		//Base defense sta of a creature
+	Floor *floor;	//Pointer to the current active floor object
 
 public:
-	Creature(int, int, char);
+	Creature(int, int, char, Floor *);
 	~Creature();
 	virtual void movement();		//Default method randomly moves the creature by one square
 	virtual void attack(Creature*);

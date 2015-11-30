@@ -1,5 +1,5 @@
 #include "Shade.h"
-
+using namespace std;
 
 
 Shade::Shade(int x, int y, int ch, Floor *flr) : Player(x, y, ch, flr)
@@ -16,6 +16,6 @@ Shade::~Shade()
 {
 }
 
-void Shade::movement() {
+void Shade::movement(string location) {
 
 }

@@ -3,13 +3,11 @@
 #include <math.h>
 
 //Calls the cell constructor 
-Creature::Creature(int x, int y, char sym) : Cell(x, y, sym, true)
-{
-}
+Creature::Creature(int x, int y, char sym, Floor *flr) : Cell(x, y, sym, true), floor(flr) { }
 
 
-Creature::~Creature()
-{
+Creature::~Creature() {
+
 }
 
 void Creature::loseHp(int damage) {
