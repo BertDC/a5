@@ -48,6 +48,9 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cell.cpp">
@@ -74,13 +77,16 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
+    <ClCompile Include="..\..\..\a5\a5\a5\Potion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Potion.cpp">
+    <ClCompile Include="..\..\..\a5\a5\a5\Gold.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Gold.cpp">
+    <ClCompile Include="..\..\..\a5\a5\a5\Item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Human.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
