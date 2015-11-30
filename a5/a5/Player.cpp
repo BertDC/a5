@@ -13,6 +13,10 @@ Player::Player(int x, int y, int ch, Floor *flr) : Creature(x, y, '@', flr)
 }
 
 
+int Player::getChamber() {
+	return chamber;
+}
+
 Player::~Player()
 {
 }

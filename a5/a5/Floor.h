@@ -1,8 +1,6 @@
 #ifndef FLOOR_H
 #define FLOOR_H
-#include "Player.h"
 #include "cell.h"
-#include "Controller.h"
 #include <vector>
 #include <istream>
 

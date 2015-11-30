@@ -15,7 +15,8 @@ protected:
 	
 public:
 	Player(int, int, int, Floor*);
-	~Player();
+	int getChamber();
+	virtual ~Player();
 	virtual int getDefense();
 	virtual void attack(Creature *);
 	virtual void movement(std::string) = 0;

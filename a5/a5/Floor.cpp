@@ -229,8 +229,10 @@ void Floor::clearFloor() {
 
 // Handles player movement
 void Floor::playerMove(string location) {
-
+	// simply calls the virtual movement() method for the player
+	player->movement(location);
 }
+
 
 void Floor::print() {
 	// goes through the Cell grid and prints out the symbol
