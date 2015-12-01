@@ -19,12 +19,6 @@ void Creature::loseHp(int damage) {
 	}
 }
 
-void Creature::attack(Creature *defender) {
-		int damage = ceil((100 / (100 + defender->getDefense()))*atk);
-		defender->loseHp(damage);
-		std::cout << "You take " << damage << "damage from an enemy." << std::endl;
-	}
-
 int Creature::getDefense() {
 	return def;
 }

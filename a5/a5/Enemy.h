@@ -8,13 +8,12 @@ class Floor;
 
 class Enemy : public Creature
 {
-protected:
-	bool hostile;
 public:
 	Enemy(int, int, char, Floor *);
 	~Enemy();
 	virtual void death();
 	void movement();
+	virtual void attack(Creature*);
 };
 
 #endif
