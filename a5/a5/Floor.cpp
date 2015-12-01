@@ -1,5 +1,7 @@
 #include "Floor.h"
 #include "Shade.h"
+#include "Drow.h"
+#include "Vampire.h"
 #include "Human.h"
 #include "cell.h"
 #include "Gold.h"
@@ -199,10 +201,18 @@ void Floor::generatePlayer(string race) {
 		grid[posRow][posCol] = player;
 	}
 	else if (race == "drow") {
-
+		// Delete whichever floor cell was previously there
+		delete grid[posRow][posCol];
+		// Makes the new player character at that position
+		player = new Drow(posRow, posCol, chamberSpawn, this);
+		grid[posRow][posCol] = player;
 	}
 	else if (race == "vampire") {
-
+		// Delete whichever floor cell was previously there
+		delete grid[posRow][posCol];
+		// Makes the new player character at that position
+		player = new Vampire(posRow, posCol, chamberSpawn, this);
+		grid[posRow][posCol] = player;
 	}
 	else if (race == "troll") {
 

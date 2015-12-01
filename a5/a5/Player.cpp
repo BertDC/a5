@@ -512,7 +512,12 @@ bool Player::movement(string location) {
 
 void Player::attack(Creature *defender) {
 	int damage = ceil((100 / (100 + defender->getDefense()))*(atk + atkMod));
-	defender->loseHp(damage);
+	if (defender->getSymbol() == 'L') {
+		if (rand() % 2 == 1)
+			defender->loseHp(damage);
+	}
+	else
+		defender->loseHp(damage);
 }
 
 std::string Player::consumePotion(std::string dir) {

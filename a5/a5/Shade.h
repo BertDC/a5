@@ -4,8 +4,6 @@
 
 class Shade : public Player
 {
-private:
-	int maxHp;
 public:
 	Shade(int, int, int, Floor*);
 	~Shade();

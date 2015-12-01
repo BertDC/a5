@@ -121,6 +121,7 @@
     <ClInclude Include="cell.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Creature.h" />
+    <ClInclude Include="Drow.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Gold.h" />
@@ -130,11 +131,14 @@
     <ClInclude Include="Potion.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shade.h" />
+    <ClInclude Include="Troll.h" />
+    <ClInclude Include="Vampire.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cell.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Creature.cpp" />
+    <ClCompile Include="Drow.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Gold.cpp" />
@@ -144,6 +148,8 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Shade.cpp" />
+    <ClCompile Include="Troll.cpp" />
+    <ClCompile Include="Vampire.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="a5.rc" />
