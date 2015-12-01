@@ -633,7 +633,7 @@ Pos Player::getLocation() {
 	return pos;
 }
 
-int Player::getDefense() {
+double Player::getDefense() {
 	return def + defMod;
 }
 

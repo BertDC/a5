@@ -22,7 +22,7 @@ void Enemy::death() {
 }
 
 void Enemy::attack(Creature *defender) {
-	int damage = ceil((100 / (100 + defender->getDefense()))*atk);
+	double damage = ceil((100 / (100 + defender->getDefense()))*atk);
 	defender->loseHp(damage);
 }
 
