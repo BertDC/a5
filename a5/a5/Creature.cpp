@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <math.h>
 #include <string>
+using namespace std;
 
 //Calls the cell constructor 
 Creature::Creature(int x, int y, char sym, Floor *flr) : Cell(x, y, sym, true), floor(flr) { }
@@ -21,6 +22,10 @@ void Creature::loseHp(double damage) {
 
 double Creature::getHp() {
 	return hp;
+}
+
+string Creature::getName() {
+	return name;
 }
 
 double Creature::getDefense() {

@@ -1,5 +1,6 @@
 #include "Vampire.h"
-
+#include <cstdlib>
+#include <math.h>
 
 
 Vampire::Vampire(int x, int y, int ch, Floor *flr) : Player(x, y, ch, flr)
@@ -8,6 +9,7 @@ Vampire::Vampire(int x, int y, int ch, Floor *flr) : Player(x, y, ch, flr)
 	maxHp = 0;
 	atk = 25;
 	def = 25;
+	name = "Vampire";
 	chamber = ch;
 }
 

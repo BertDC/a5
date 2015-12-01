@@ -2,6 +2,7 @@
 #include <math.h>
 #include <iostream>
 #include <sstream>
+#include <cstdlib>
 using namespace std;
 
 
@@ -12,6 +13,9 @@ Player::Player(int x, int y, int ch, Floor *flr) : Creature(x, y, '@', flr) {
 	chamber = ch;
 	gold = 0;
 	prev = '.';
+	for (int i = 0; i < 5; i++) {
+		knownPots[i] = false;
+	}
 }
 
 
@@ -25,7 +29,7 @@ Player::~Player() {
 
 // Prints the 5 lines of player stats
 void Player::printStats() {
-	cout << "Race: Shade " << " Gold: " << gold << "                                               Floor: " << floor->getLevel() << endl;
+	cout << "Race: " << name << " Gold: " << gold << "                                               Floor: " << floor->getLevel() << endl;
 	cout << "HP: " << hp << endl;
 	cout << "ATK: " << atk + atkMod << endl;
 	cout << "DEF: " << def + defMod << endl;
@@ -538,7 +542,7 @@ bool Player::movement(string location) {
 
 void Player::attack(Creature *defender) {
 	// Calculates and deals the damage
-	int damage = ceil((100 / (100 + defender->getDefense()))*(atk + atkMod));
+	double damage = ceil((100 / (100 + defender->getDefense()))*(atk + atkMod));
 	if (defender->getSymbol() == 'L') {
 		if (rand() % 2 == 1)
 			defender->loseHp(damage);
@@ -547,7 +551,7 @@ void Player::attack(Creature *defender) {
 	defender->loseHp(damage);
 	// Prints a message
 	stringstream ss;
-	ss << " You deal " << damage << " damage to a nearby " << defender->name << " (" << defender->getHp() << " HP remaining).";
+	ss << " You deal " << damage << " damage to a nearby " << defender->getName() << " (" << defender->getHp() << " HP remaining).";
 	floor->actionQueue += ss.str();
 }
 
@@ -577,7 +581,7 @@ bool Player::attemptStrike(string dir) {
 	}
 	// for any other class
 	else {
-		attack(dynamic_cast<Creature*>(floor->grid[posX][posY]));
+		attack(dynamic_cast<Creature*>(floor->grid[x][y]));
 		return true;
 	}
 }
@@ -651,17 +655,17 @@ void Player::interactVicinity() {
 				int type = floor->grid[posX + i][posY + j]->getType();
 				if (knownPots[type] == true) {
 					if (type == 0)
-						floor->actionQueue += " You spot a Poisonous potion";
+						floor->actionQueue += " You spot a Poison Health potion";
 					else if (type == 1)
-						floor->actionQueue += " You spot a Health Up potion";
+						floor->actionQueue += " You spot a Restore Health potion";
 					else if (type == 2)
-						floor->actionQueue += " You spot an Attack Down potion";
+						floor->actionQueue += " You spot a Weaken Attack potion";
 					else if (type == 3)
-						floor->actionQueue += " You spot an Attack Up potion";
+						floor->actionQueue += " You spot a Boost Attack potion";
 					else if (type == 4)
-						floor->actionQueue += " You spot a Defense Down potion";
+						floor->actionQueue += " You spot a Weaken Defense potion";
 					else if (type == 5)
-						floor->actionQueue += " You spot a Defense Up potion";
+						floor->actionQueue += " You spot a Boost Defense potion";
 
 				}
 				else

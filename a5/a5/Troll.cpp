@@ -8,6 +8,7 @@ Troll::Troll(int x, int y, int ch, Floor *flr) : Player(x, y, ch, flr)
 	maxHp = 120;
 	atk = 25;
 	def = 15;
+	name = "Troll";
 	chamber = ch;
 }
 

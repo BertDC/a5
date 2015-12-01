@@ -1,5 +1,6 @@
 #include "Drow.h"
-
+#include <cstdlib>
+#include <math.h>
 
 
 Drow::Drow(int x, int y, int ch, Floor *flr) : Player(x, y, ch, flr)
@@ -8,6 +9,7 @@ Drow::Drow(int x, int y, int ch, Floor *flr) : Player(x, y, ch, flr)
 	maxHp = 150;
 	atk = 25;
 	def = 15;
+	name = "Drow";
 	chamber = ch;
 }
 

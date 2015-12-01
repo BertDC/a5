@@ -429,6 +429,16 @@ void Floor::updateEnemies() {
 			grid[i][j]->movement();	
 		}
 	}
+	// Goes through the Cell grid and resets all Enemy flags
+	for (int i = 0; i < 25; i++) {
+		for (int j = 0; j < 79; j++) {
+			// attempts to cast a Cell to an Enemy, if successful, then we reset its flag
+			Enemy * hold = dynamic_cast<Enemy*>(grid[i][j]);
+			if (hold) {
+				hold->resetMove();
+			}
+		}
+	}
 }
 
 void Floor::print() {
