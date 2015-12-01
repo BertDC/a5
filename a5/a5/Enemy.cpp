@@ -1,5 +1,10 @@
 #include "Enemy.h"
-
+#include <iostream>
+#include <sstream>
+#include <math.h>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
 
 
 Enemy::Enemy(int x, int y, char sym, Floor * flr) : Creature(x, y, sym, flr) {
@@ -17,8 +22,7 @@ void Enemy::death() {
 }
 
 void Enemy::attack(Creature *defender) {
-	int damage = ceil((100 / (100 + defender->getDefense()))*atk);
-	std::cout << "You take " << damage << " damage from nearby enemy." << std::endl;
+	double damage = ceil((100 / (100 + defender->getDefense()))*atk);
 	defender->loseHp(damage);
 }
 

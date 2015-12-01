@@ -68,109 +68,29 @@ void Controller::play() {
 			}
 		}
 		// The normal commands that can be issued when the game has started
+		// Checks all directions
+		if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
+			|| cmd == "nw" || cmd == "ne" || cmd == "sw" || cmd == "se") {
+			floor[currentLevel]->playerMove(cmd);
+		}
 
-		// Move North
-		else if (cmd == "no") {
-			floor[currentLevel]->playerMove(cmd);
-		}
-		// Move South
-		else if (cmd == "so") {
-			floor[currentLevel]->playerMove(cmd);
-		}
-		// Move East
-		else if (cmd == "ea") {
-			floor[currentLevel]->playerMove(cmd);
-		}
-		// Move West
-		else if (cmd == "we") {
-			floor[currentLevel]->playerMove(cmd);
-		}
-		// Move North-East
-		else if (cmd == "ne") {
-			floor[currentLevel]->playerMove(cmd);
-		}
-		// Move North-West
-		else if (cmd == "nw") {
-			floor[currentLevel]->playerMove(cmd);
-		}
-		// Move South-East
-		else if (cmd == "se") {
-			floor[currentLevel]->playerMove(cmd);
-		}
-		// Move South-West
-		else if (cmd == "sw") {
-			floor[currentLevel]->playerMove(cmd);
-		}
 		// Use potion
 		else if (cmd == "u") {
 			cin >> cmd;
-			// Use North
-			if (cmd == "no") {
+			// Checks all directions
+			if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
+				|| cmd == "nw" || cmd == "ne" || cmd == "sw" || cmd == "se") {
 				floor[currentLevel]->playerUse(cmd);
 			}
-			// Use South
-			else if (cmd == "so") {
-				floor[currentLevel]->playerUse(cmd);
-			}
-			// Use East
-			else if (cmd == "ea") {
-				floor[currentLevel]->playerUse(cmd);
-			}
-			// Use West
-			else if (cmd == "we") {
-				floor[currentLevel]->playerUse(cmd);
-			}
-			// Use North-East
-			else if (cmd == "ne") {
-				floor[currentLevel]->playerUse(cmd);
-			}
-			// Use North-West
-			else if (cmd == "nw") {
-				floor[currentLevel]->playerUse(cmd);
-			}
-			// Use South-East
-			else if (cmd == "se") {
-				floor[currentLevel]->playerUse(cmd);
-			}
-			// Use South-West
-			else if (cmd == "sw") {
-				floor[currentLevel]->playerUse(cmd);
-			}
+
 		}
 		// Attack a location
 		else if (cmd == "a") {
 			cin >> cmd;
-			// Attack North
-			if (cmd == "no") {
-
-			}
-			// Attack South
-			else if (cmd == "so") {
-
-			}
-			// Attack East
-			else if (cmd == "ea") {
-
-			}
-			// Attack West
-			else if (cmd == "we") {
-
-			}
-			// Attack North-East
-			else if (cmd == "ne") {
-
-			}
-			// Attack North-West
-			else if (cmd == "nw") {
-
-			}
-			// Attack South-East
-			else if (cmd == "se") {
-
-			}
-			// Attack South-West
-			else if (cmd == "sw") {
-
+			// Checks all directions
+			if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
+				|| cmd == "nw" || cmd == "ne" || cmd == "sw" || cmd == "se") {
+				floor[currentLevel]->playerAttack(cmd);
 			}
 		}
 		// reset

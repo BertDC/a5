@@ -9,7 +9,7 @@ public:
 	Vampire(int, int, int, Floor*);
 	~Vampire();
 	void attack(Creature *);
-	std::string consumePotion(std::string);
+	bool consumePotion(std::string);
 };
 
 #endif

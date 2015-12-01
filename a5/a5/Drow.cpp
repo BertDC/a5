@@ -16,7 +16,7 @@ Drow::~Drow()
 {
 }
 
-std::string Drow::consumePotion(std::string dir) {
+bool Drow::consumePotion(std::string dir) {
 	int x = posX;
 	int y = posY;
 	std::string message;
@@ -29,7 +29,7 @@ std::string Drow::consumePotion(std::string dir) {
 	else if (dir == "we" || dir == "sw" || dir == "nw")
 		y -= 1;
 	if (floor->grid[x][y]->getSymbol() != 'P') {
-		return "No potion found!";
+		return false;
 	}
 	int type = floor->grid[x][y]->getType();
 	//Potion effects take place depending on type consumed
@@ -64,5 +64,5 @@ std::string Drow::consumePotion(std::string dir) {
 	knownPots[type] = true;
 	delete floor->grid[x][y];
 	floor->grid[x][y] = new Cell(x, y, '.');
-	return message;
+	return true;
 }

@@ -28,7 +28,7 @@ bool Troll::movement(std::string location) {
 	return moved;
 }
 
-std::string Troll::consumePotion(std::string dir) {
+bool Troll::consumePotion(std::string dir) {
 	hp += 5;
 	return Player::consumePotion(dir);
 	

@@ -8,7 +8,7 @@ class Drow : public Player
 public:
 	Drow(int, int, int, Floor*);
 	~Drow();
-	std::string consumePotion(std::string);
+	bool consumePotion(std::string);
 };
 
 #endif

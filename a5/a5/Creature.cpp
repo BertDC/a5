@@ -11,7 +11,7 @@ Creature::~Creature() {
 
 }
 
-void Creature::loseHp(int damage) {
+void Creature::loseHp(double damage) {
 	hp -= damage;
 	if (hp <= 0) {
 		hp = 0;
@@ -19,7 +19,11 @@ void Creature::loseHp(int damage) {
 	}
 }
 
-int Creature::getDefense() {
+double Creature::getHp() {
+	return hp;
+}
+
+double Creature::getDefense() {
 	return def;
 }
 

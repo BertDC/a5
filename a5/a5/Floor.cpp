@@ -19,7 +19,7 @@ Pos::Pos(int x, int y) : row(x), col(y) { }
 Pos::~Pos() { }
 
 // The only constructor
-Floor::Floor(int level) : level(level), grid(NULL), player(NULL), alive(true) { }
+Floor::Floor(int level) : level(level), grid(NULL), player(NULL), alive(true), actionQueue("") { }
 
 // Deletes ALL cells in the grid, then deletes the grid itself
 Floor::~Floor() {
@@ -390,27 +390,43 @@ void Floor::playerMove(string location) {
 	if (moved) {
 		// makes the enemy's turn
 		updateEnemies();
-		// prints the floor
-		print();
 		player->interactVicinity();
 	}
+	else actionQueue += " You can't move there.";
+	print();
+}
+
+void Floor::playerAttack(string direction) {
+	// Attempts to attack a location
+	bool attack = player->attemptStrike(direction);
+	// If successful then it does the enemies turn
+	if (attack) {
+		// makes the enemy's turn
+		updateEnemies();
+		player->interactVicinity();
+	}
+	else actionQueue += " You can't attack that.";
+	print();
+
 }
 
 void Floor::playerUse(string direction) {
-	string message = player->consumePotion(direction);
+	bool potion = player->consumePotion(direction);
+	// If you successfully use a potion, computes enemies turns
+	if (potion) {
 		// makes the enemy's turn
 		updateEnemies();
-		// prints the floor
-		print();
-		cout << message << endl;
 		player->interactVicinity();
+	}
+	else actionQueue += " That's no potion...";
+	print();
 }
 
 void Floor::updateEnemies() {
 	// goes through the Cell grid and prints out the symbol
 	for (int i = 0; i < 25; i++) {
 		for (int j = 0; j < 79; j++) {
-			grid[i][j]->movement();		// outputs the symbol associated to each cell
+			grid[i][j]->movement();	
 		}
 	}
 }

@@ -10,7 +10,7 @@ public:
 	~Troll();
 	void attack(Creature *);
 	bool movement(std::string);
-	std::string consumePotion(std::string);
+	bool consumePotion(std::string);
 };
 
 #endif

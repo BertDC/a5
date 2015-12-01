@@ -1,6 +1,7 @@
 #include "Player.h"
 #include <math.h>
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 
@@ -10,7 +11,6 @@ Player::Player(int x, int y, int ch, Floor *flr) : Creature(x, y, '@', flr) {
 	floor = flr;
 	chamber = ch;
 	gold = 0;
-	actionQueue = "";
 	prev = '.';
 }
 
@@ -25,11 +25,13 @@ Player::~Player() {
 
 // Prints the 5 lines of player stats
 void Player::printStats() {
-	cout << "Race: Shade " << " Gold: " << gold << "                                     Floor: " << floor->getLevel() << endl;
+	cout << "Race: Shade " << " Gold: " << gold << "                                               Floor: " << floor->getLevel() << endl;
 	cout << "HP: " << hp << endl;
 	cout << "ATK: " << atk + atkMod << endl;
 	cout << "DEF: " << def + defMod << endl;
-	cout << "Action: " << actionQueue << endl;
+	cout << "Action:" << floor->actionQueue << endl;
+	// Resets the list of actions
+	floor->actionQueue = "";
 }
 
 // The movement of the Player class
@@ -84,6 +86,9 @@ bool Player::movement(string location) {
 			prev = '.';
 			posX = posX;
 			posY = posY - 1;
+			stringstream ss;
+			ss << " You pick up " << size << " gold.";
+			floor->actionQueue += ss.str();
 			return true;
 		}
 		// Player encounters the stairs
@@ -143,6 +148,9 @@ bool Player::movement(string location) {
 			prev = '.';
 			posX = posX;
 			posY = posY + 1;
+			stringstream ss;
+			ss << " You pick up " << size << " gold.";
+			floor->actionQueue += ss.str();
 			return true;
 		}
 		// Player encounters the stairs
@@ -202,6 +210,9 @@ bool Player::movement(string location) {
 			prev = '.';
 			posX = posX + 1;
 			posY = posY;
+			stringstream ss;
+			ss << " You pick up " << size << " gold.";
+			floor->actionQueue += ss.str();
 			return true;
 		}
 		// Player encounters the stairs
@@ -261,6 +272,9 @@ bool Player::movement(string location) {
 			prev = '.';
 			posX = posX - 1;
 			posY = posY;
+			stringstream ss;
+			ss << " You pick up " << size << " gold.";
+			floor->actionQueue += ss.str();
 			return true;
 		}
 		// Player encounters the stairs
@@ -320,6 +334,9 @@ bool Player::movement(string location) {
 			prev = '.';
 			posX = posX - 1;
 			posY = posY - 1;
+			stringstream ss;
+			ss << " You pick up " << size << " gold.";
+			floor->actionQueue += ss.str();
 			return true;
 		}
 		// Player encounters the stairs
@@ -379,6 +396,9 @@ bool Player::movement(string location) {
 			prev = '.';
 			posX = posX + 1;
 			posY = posY - 1;
+			stringstream ss;
+			ss << " You pick up " << size << " gold.";
+			floor->actionQueue += ss.str();
 			return true;
 		}
 		// Player encounters the stairs
@@ -438,6 +458,9 @@ bool Player::movement(string location) {
 			prev = '.';
 			posX = posX - 1;
 			posY = posY + 1;
+			stringstream ss;
+			ss << " You pick up " << size << " gold.";
+			floor->actionQueue += ss.str();
 			return true;
 		}
 		// Player encounters the stairs
@@ -497,6 +520,9 @@ bool Player::movement(string location) {
 			prev = '.';
 			posX = posX + 1;
 			posY = posY + 1;
+			stringstream ss;
+			ss << " You pick up " << size << " gold.";
+			floor->actionQueue += ss.str();
 			return true;
 		}
 		// Player encounters the stairs
@@ -511,19 +537,54 @@ bool Player::movement(string location) {
 
 
 void Player::attack(Creature *defender) {
+	// Calculates and deals the damage
 	int damage = ceil((100 / (100 + defender->getDefense()))*(atk + atkMod));
 	if (defender->getSymbol() == 'L') {
 		if (rand() % 2 == 1)
 			defender->loseHp(damage);
 	}
 	else
-		defender->loseHp(damage);
+	defender->loseHp(damage);
+	// Prints a message
+	stringstream ss;
+	ss << " You deal " << damage << " damage to a nearby " << defender->name << " (" << defender->getHp() << " HP remaining).";
+	floor->actionQueue += ss.str();
 }
 
-std::string Player::consumePotion(std::string dir) {
+// Called from the floor class to attempt a strike
+bool Player::attemptStrike(string dir) {
 	int x = posX;
 	int y = posY;
-	string message;
+	if (dir == "no" || dir == "ne" || dir == "nw")
+		x -= 1;
+	else if (dir == "so" || dir == "se" || dir == "sw")
+		x += 1;
+	if (dir == "ea" || dir == "ne" || dir == "se")
+		y += 1;
+	else if (dir == "we" || dir == "sw" || dir == "nw")
+		y -= 1;
+	char symbol = floor->grid[x][y]->getSymbol();
+	if (symbol != 'D' && symbol != 'H' && symbol != 'L' && symbol != 'E' && symbol != 'W' && symbol != 'M' && symbol != 'O') {
+		return false;
+	}
+	// attack for dragons
+	else if (symbol == 'D') {
+
+	}
+	// attack for Merchant
+	else if (symbol == 'M') {
+
+	}
+	// for any other class
+	else {
+		attack(dynamic_cast<Creature*>(floor->grid[posX][posY]));
+		return true;
+	}
+}
+
+bool Player::consumePotion(string dir) {
+	int x = posX;
+	int y = posY;
 	if (dir == "no" || dir == "ne" || dir == "nw")
 		x -= 1;
 	else if (dir == "so" || dir == "se" || dir == "sw")
@@ -533,42 +594,42 @@ std::string Player::consumePotion(std::string dir) {
 	else if (dir == "we" || dir == "sw" || dir == "nw")
 		y -= 1;
 	if (floor->grid[x][y]->getSymbol() != 'P') {
-		return "No potion found!";
+		return false;
 	}
 	int type = floor->grid[x][y]->getType();
 	//Potion effects take place depending on type consumed
 	if (type == 0) {
 		loseHp(10);
-		message = "You feel sick! Lost 10 health.";
+		floor->actionQueue += " You feel sick! Lost 10 health.";
 	}
 	else if (type == 1) {
 		hp = fmin(maxHp, hp + 10);
-		message = "You feel rejuvenated! Gain +10 health.";
+		floor->actionQueue += " You feel rejuvenated! Gain +10 health.";
 	}
 	else if (type == 2) {
 		atkMod -= 5;
-		message = "You feel tired... Lose 5 attack.";
+		floor->actionQueue += " You feel tired... Lose 5 attack.";
 	}
 	else if (type == 3) {
 		atkMod += 5;
-		message = "You feel stronger!! Gain 5 attack!";
+		floor->actionQueue += " You feel stronger! Gain 5 attack!";
 	}
 	else if (type == 4) {
 		defMod -= 5;
-		message = "You feel weak. Lose 5 defense.";
+		floor->actionQueue += " You feel weak. Lose 5 defense.";
 	}
 	else if (type == 5) {
 		defMod += 5;
-		message = "You feel your skin harden. Odd. Gain 5 defense.";
+		floor->actionQueue += " You feel your skin harden. Odd. Gain 5 defense.";
 	}
 	else if (type == 6) {
-		message = "One problem down";
+		floor->actionQueue += " One problem down";
 	}
 	//Player will recognize the consumed potion from this point onwards
 	knownPots[type] = true;
 	delete floor->grid[x][y];
 	floor->grid[x][y] = new Cell(x, y, '.');
-	return message;
+	return true;
 }
 
 // Gets the player location
@@ -577,7 +638,7 @@ Pos Player::getLocation() {
 	return pos;
 }
 
-int Player::getDefense() {
+double Player::getDefense() {
 	return def + defMod;
 }
 
@@ -590,21 +651,21 @@ void Player::interactVicinity() {
 				int type = floor->grid[posX + i][posY + j]->getType();
 				if (knownPots[type] == true) {
 					if (type == 0)
-						cout << "You spot a Poisonous potion" << endl;
+						floor->actionQueue += " You spot a Poisonous potion";
 					else if (type == 1)
-						cout << "You spot a Health Up potion" << endl;
+						floor->actionQueue += " You spot a Health Up potion";
 					else if (type == 2)
-						cout << "You spot an Attack Down potion" << endl;
+						floor->actionQueue += " You spot an Attack Down potion";
 					else if (type == 3)
-						cout << "You spot an Attack Up potion" << endl;
+						floor->actionQueue += " You spot an Attack Up potion";
 					else if (type == 4)
-						cout << "You spot a Defense Down potion" << endl;
+						floor->actionQueue += " You spot a Defense Down potion";
 					else if (type == 5)
-						cout << "You spot a Defense Up potion" << endl;
+						floor->actionQueue += " You spot a Defense Up potion";
 
 				}
 				else
-				cout << "You spot an unknown potion" << endl;
+					floor->actionQueue += " You spot an unknown potion";
 			}
 			else if (sym == 'H' || sym == 'W' || sym == 'E' || sym == 'O' || sym == 'M' || sym == 'D' || sym == 'L') {
 				//floor->grid[posX + i][posY + j]->

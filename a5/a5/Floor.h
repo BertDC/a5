@@ -28,9 +28,11 @@ public:
 	Floor(int);
 	~Floor();
 
-	Cell ***grid;					// 2d-array containing each individual cell* in the map layout
+	Cell ***grid;					// 2d-array containing each individual cell* on the floor
+	std::string actionQueue;		// stores the Action messages
 	void initialize(std::string, Controller *, std::fstream *);
 	void playerMove(std::string);
+	void playerAttack(std::string);
 	void playerUse(std::string);
 	void generatePlayer(std::string);
 	void generatePotion();
