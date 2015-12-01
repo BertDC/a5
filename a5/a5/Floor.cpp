@@ -400,7 +400,7 @@ void Floor::updateEnemies() {
 	// goes through the Cell grid and prints out the symbol
 	for (int i = 0; i < 25; i++) {
 		for (int j = 0; j < 79; j++) {
-			grid[i][j]->movement();		// outputs the symbol associated to each cell
+			grid[i][j]->movement();	
 		}
 	}
 }

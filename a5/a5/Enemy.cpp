@@ -1,5 +1,6 @@
 #include "Enemy.h"
-
+#include <cstdlib>
+#include <ctime>
 
 
 Enemy::Enemy(int x, int y, char sym, Floor * flr) : Creature(x, y, sym, flr) {
