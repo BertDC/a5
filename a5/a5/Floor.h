@@ -1,6 +1,7 @@
 #ifndef FLOOR_H
 #define FLOOR_H
 #include "cell.h"
+#include "Gold.h"
 #include <vector>
 #include <istream>
 
@@ -41,6 +42,7 @@ public:
 	void addToChamber(int, int, int);			// Adds a cell at grid[row][col] to a chamber
 	void addNeighbours(int, int, int);			// Adds the neighbours of grid[row][col] to the chamber
 	void print();								// prints out the floor layout
+	void updateEnemies();						//Updates the positions of all enemies on the floor
 	int chamberPos(Pos);						// Given a position, returns which chamber its in
 	int getLevel();
 	//void isAlive();							// returns the isAlive 

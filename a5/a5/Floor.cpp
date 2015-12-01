@@ -1,5 +1,6 @@
 #include "Floor.h"
 #include "Shade.h"
+#include "Human.h"
 #include "cell.h"
 #include "Gold.h"
 #include <fstream>
@@ -210,7 +211,7 @@ void Floor::generatePlayer(string race) {
 
 	}
 }
-
+//Generates a random potion
 void Floor::generatePotion() {
 	srand(time(NULL));		// random seed
 	// The following computes a random number which determines which Chamber to spawn in,
@@ -308,7 +309,43 @@ void Floor::generateGold() {
 }
 
 void Floor::generateEnemy() {
+	srand(time(NULL));		// random seed
 
+							// The following will randomly select a chamber and valid position for the gold to spawn,
+							// then randomly select the size of the Gold pile (according to the chances described in cc3k.pdf)
+	int posRow, posCol;
+	while (true) {
+		int chamberSpawn = rand() % 5;		// Random number between 0 and 4 to determine which chamber to spawn in.
+		int randIndex; 						// Random Cell from the Random Chamber
+
+		randIndex = rand() % chambers[chamberSpawn].size();
+		posRow = chambers[chamberSpawn].at(randIndex).row;		// the row of the random location
+		posCol = chambers[chamberSpawn].at(randIndex).col;		// the column of the random location
+		if (grid[posRow][posCol]->getSymbol() == '.')			// ensures we don't overwrite another type
+			break;
+	}
+	// Delete whichever floor cell was previously there
+	delete grid[posRow][posCol];
+	// Now that it has found a correct location, we determine the type of Enemy and then spawn it
+	int type = rand() % 18;					// random number between 0 and 17 for Enemy type odds
+	if (type >= 0 && type < 4) {			// 2 in 9 chances for Human
+		grid[posRow][posCol] = new Human(posRow, posCol, this);
+	}
+	else if (type >= 4 && type < 7) {		// 3 in 18 chances for Dwarf
+		grid[posRow][posCol] = new Human(posRow, posCol, this);
+	}
+	else if (type >= 7 && type < 12) {		// 5 in 18 chances for Halfling
+		grid[posRow][posCol] = new Human(posRow, posCol, this);
+	}
+	else if (type >= 12 && type < 14) {		// 1 in 9 chances for Elf
+		grid[posRow][posCol] = new Human(posRow, posCol, this);
+	}
+	else if (type >= 14 && type < 16) {		// 1 in 9 chances for Orc
+		grid[posRow][posCol] = new Human(posRow, posCol, this);
+	}
+	else {									// 1 in 9 chances for Merchant
+		grid[posRow][posCol] = new Human(posRow, posCol, this);
+	}
 }
 
 void Floor::clearFloor() {
@@ -342,6 +379,7 @@ void Floor::playerMove(string location) {
 	// If the move was successful, we move the enemies and print the floor
 	if (moved) {
 		// makes the enemy's turn
+		updateEnemies();
 		// prints the floor
 		print();
 	}
@@ -350,9 +388,19 @@ void Floor::playerMove(string location) {
 void Floor::playerUse(string direction) {
 	string message = player->consumePotion(direction);
 		// makes the enemy's turn
+		updateEnemies();
 		// prints the floor
 		print();
 		cout << message << endl;
+}
+
+void Floor::updateEnemies() {
+	// goes through the Cell grid and prints out the symbol
+	for (int i = 0; i < 25; i++) {
+		for (int j = 0; j < 79; j++) {
+			grid[i][j]->movement();		// outputs the symbol associated to each cell
+		}
+	}
 }
 
 void Floor::print() {

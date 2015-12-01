@@ -28,6 +28,10 @@ char Cell::getSymbol() {
 }
 
 int Cell::getType() {
-	return 6;
+	return 0;
+}
+
+void Cell::movement() {
+
 }
 
