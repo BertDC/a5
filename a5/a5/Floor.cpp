@@ -177,6 +177,8 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 	for (int i = 0; i < 20; i++) {
 		generateEnemy();
 	}
+	// Checks the initial vicinity of the character so it can see potions 
+	player->interactVicinity();
 
 }
 
@@ -220,9 +222,8 @@ void Floor::generatePlayer(string race) {
 	else if (race == "goblin") {
 
 	}
-	// Checks the vicinity and adds some messages to the Action queue
+	// adds some messages to the Action queue
 	actionQueue += " A " + race + " has spawned.";
-	player->interactVicinity();
 }
 //Generates a random potion
 void Floor::generatePotion() {

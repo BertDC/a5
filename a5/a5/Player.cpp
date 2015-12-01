@@ -29,7 +29,7 @@ Player::~Player() {
 
 // Prints the 5 lines of player stats
 void Player::printStats() {
-	cout << "Race: " << name << " Gold: " << gold << "                                               Floor: " << floor->getLevel() << endl;
+	cout << "Race: " << name << " Gold: " << gold << "                                                  Floor: " << floor->getLevel() + 1 << endl;
 	cout << "HP: " << hp << endl;
 	cout << "ATK: " << atk + atkMod << endl;
 	cout << "DEF: " << def + defMod << endl;
@@ -539,20 +539,20 @@ bool Player::movement(string location) {
 	return false;
 }
 
+void Player::death() {
+
+}
+
 
 void Player::attack(Creature *defender) {
 	// Calculates and deals the damage
 	double damage = ceil((100 / (100 + defender->getDefense()))*(atk + atkMod));
-	if (defender->getSymbol() == 'L') {
-		if (rand() % 2 == 1)
-			defender->loseHp(damage);
-	}
-	else
-	defender->loseHp(damage);
 	// Prints a message
 	stringstream ss;
-	ss << " You deal " << damage << " damage to a nearby " << defender->getName() << " (" << defender->getHp() << " HP remaining).";
+	ss << " You deal " << damage << " damage to a nearby " << defender->getName() << " (" << defender->getHp() - damage << " HP remaining).";
 	floor->actionQueue += ss.str();
+	// We do this at the end, in case the Defender is killed in the process
+	defender->loseHp(damage);
 }
 
 // Called from the floor class to attempt a strike
@@ -571,13 +571,24 @@ bool Player::attemptStrike(string dir) {
 	if (symbol != 'D' && symbol != 'H' && symbol != 'L' && symbol != 'E' && symbol != 'W' && symbol != 'M' && symbol != 'O') {
 		return false;
 	}
-	// attack for dragons
+	// attacking a dragons
 	else if (symbol == 'D') {
 
 	}
-	// attack for Merchant
+	// attacking a Merchant
 	else if (symbol == 'M') {
 
+	}
+	// attacking a Halfling
+	else if (symbol == 'L') {
+		// 50% chance to miss
+		if (rand() % 2 == 0) {
+			floor->actionQueue += " You miss the Halfling!";
+		}
+		else {
+			attack(dynamic_cast<Creature*>(floor->grid[x][y]));
+			return true;
+		}
 	}
 	// for any other class
 	else {
@@ -627,7 +638,7 @@ bool Player::consumePotion(string dir) {
 		floor->actionQueue += " You feel your skin harden. Odd. Gain 5 defense.";
 	}
 	else if (type == 6) {
-		floor->actionQueue += " One problem down";
+		floor->actionQueue += " One problem down.";
 	}
 	//Player will recognize the consumed potion from this point onwards
 	knownPots[type] = true;
@@ -655,24 +666,21 @@ void Player::interactVicinity() {
 				int type = floor->grid[posX + i][posY + j]->getType();
 				if (knownPots[type] == true) {
 					if (type == 0)
-						floor->actionQueue += " You spot a Poison Health potion";
+						floor->actionQueue += " You spot a Poison Health potion.";
 					else if (type == 1)
-						floor->actionQueue += " You spot a Restore Health potion";
+						floor->actionQueue += " You spot a Restore Health potion.";
 					else if (type == 2)
-						floor->actionQueue += " You spot a Weaken Attack potion";
+						floor->actionQueue += " You spot a Weaken Attack potion.";
 					else if (type == 3)
-						floor->actionQueue += " You spot a Boost Attack potion";
+						floor->actionQueue += " You spot a Boost Attack potion.";
 					else if (type == 4)
-						floor->actionQueue += " You spot a Weaken Defense potion";
+						floor->actionQueue += " You spot a Weaken Defense potion.";
 					else if (type == 5)
-						floor->actionQueue += " You spot a Boost Defense potion";
+						floor->actionQueue += " You spot a Boost Defense potion.";
 
 				}
 				else
-					floor->actionQueue += " You spot an unknown potion";
-			}
-			else if (sym == 'H' || sym == 'W' || sym == 'E' || sym == 'O' || sym == 'M' || sym == 'D' || sym == 'L') {
-				//floor->grid[posX + i][posY + j]->
+					floor->actionQueue += " You spot an unknown potion.";
 			}
 		}
 }

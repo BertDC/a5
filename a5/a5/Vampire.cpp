@@ -20,16 +20,11 @@ Vampire::~Vampire()
 
 void Vampire::attack(Creature *defender) {
 	int damage = ceil((100 / (100 + defender->getDefense()))*(atk + atkMod));
-	if (defender->getSymbol() == 'L') {
-		if (rand() % 2 == 1) {
-			defender->loseHp(damage);
-			hp += 5;
-		}
-	}
-	else {
-		defender->loseHp(damage);
-		hp += 5;
-	}
+	defender->loseHp(damage);
+	// Allergic to Dwarves
+	if (defender->getSymbol() == 'W') hp -= 5;
+	else hp += 5;
+	
 }
 
 bool Vampire::consumePotion(std::string dir) {

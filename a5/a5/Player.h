@@ -24,6 +24,7 @@ public:
 	virtual bool movement(std::string);
 	virtual bool consumePotion(std::string);
 	virtual bool attemptStrike(std::string);
+	virtual void death();
 	virtual Pos getLocation();		// Gets the player location
 	void printStats();		// Prints the player's stats to cout
 	void interactVicinity();	//Performs interactions based on surroundings (ie take damage from enemy, spot unknown potion)

@@ -2,7 +2,6 @@
 #include "Gold.h"
 #include "Floor.h"
 
-#pragma once
 class Human : public Enemy
 {
 protected:
@@ -11,5 +10,7 @@ protected:
 public:
 	Human(int, int, Floor*);
 	~Human();
+	void death();		// Custom death method to spawn 2 gold piles
+	void makeGold(int, int);
 };
 
