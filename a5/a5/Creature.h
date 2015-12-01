@@ -1,6 +1,7 @@
 #ifndef CREATURE_H
 #define CREATURE_H
 #include "cell.h"
+#include <iostream>
 
 class Floor;
 

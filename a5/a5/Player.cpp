@@ -575,3 +575,34 @@ Pos Player::getLocation() {
 int Player::getDefense() {
 	return def + defMod;
 }
+
+void Player::interactVicinity() {
+	string dir[3] = { "no", "so", "etc" };
+	for (int i = -1; i < 2; i++)
+		for (int j = -1; j < 2; j++) {
+			char sym = floor->grid[posX + i][posY + j]->getSymbol();
+			if (sym == 'P') {
+				int type = floor->grid[posX + i][posY + j]->getType();
+				if (knownPots[type] == true) {
+					if (type == 0)
+						cout << "You spot a Poisonous potion" << endl;
+					else if (type == 1)
+						cout << "You spot a Health Up potion" << endl;
+					else if (type == 2)
+						cout << "You spot an Attack Down potion" << endl;
+					else if (type == 3)
+						cout << "You spot an Attack Up potion" << endl;
+					else if (type == 4)
+						cout << "You spot a Defense Down potion" << endl;
+					else if (type == 5)
+						cout << "You spot a Defense Up potion" << endl;
+
+				}
+				else
+				cout << "You spot an unknown potion" << endl;
+			}
+			else if (sym == 'H' || sym == 'W' || sym == 'E' || sym == 'O' || sym == 'M' || sym == 'D' || sym == 'L') {
+				//floor->grid[posX + i][posY + j]->
+			}
+		}
+}

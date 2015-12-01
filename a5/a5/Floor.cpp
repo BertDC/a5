@@ -382,6 +382,7 @@ void Floor::playerMove(string location) {
 		updateEnemies();
 		// prints the floor
 		print();
+		player->interactVicinity();
 	}
 }
 
@@ -392,6 +393,7 @@ void Floor::playerUse(string direction) {
 		// prints the floor
 		print();
 		cout << message << endl;
+		player->interactVicinity();
 }
 
 void Floor::updateEnemies() {

@@ -31,7 +31,6 @@ int Cell::getType() {
 	return 0;
 }
 
-void Cell::movement() {
+void Cell::movement() {}
 
-}
 
