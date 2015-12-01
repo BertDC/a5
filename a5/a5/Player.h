@@ -14,7 +14,6 @@ protected:
 	int gold;			//Player's current gold
 	bool knownPots[6];	//Potions discovered by the player character
 	char prev;			//Previous tile the character was on
-	std::string actionQueue;
 	
 public:
 	Player(int, int, int, Floor*);
@@ -23,8 +22,9 @@ public:
 	virtual int getDefense();
 	virtual void attack(Creature *);
 	virtual bool movement(std::string);
-	virtual std::string consumePotion(std::string);
-	Pos getLocation();		// Gets the player location
+	virtual bool consumePotion(std::string);
+	virtual bool attemptStrike(std::string);
+	virtual Pos getLocation();		// Gets the player location
 	void printStats();		// Prints the player's stats to cout
 	void interactVicinity();	//Performs interactions based on surroundings (ie take damage from enemy, spot unknown potion)
 };

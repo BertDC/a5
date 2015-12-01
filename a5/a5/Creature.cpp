@@ -19,6 +19,10 @@ void Creature::loseHp(int damage) {
 	}
 }
 
+int Creature::getHp() {
+	return hp;
+}
+
 int Creature::getDefense() {
 	return def;
 }

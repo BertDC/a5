@@ -12,14 +12,17 @@ protected:
 	int maxHp;		//Maximum possible health of a creature
 	int atk;		//Base attack stat of a creature
 	int def;		//Base defense sta of a creature
+	
 	Floor *floor;	//Pointer to the current active floor object
 
 public:
+	std::string name;
 	Creature(int, int, char, Floor *);
 	virtual ~Creature() = 0;
 	virtual void loseHp(int);		//Subtracts battle damage from current health value and determines if death occurs
 	virtual void death();			//Called upon taking fatal damage
 	virtual int getDefense();		//Returns def Integer
+	virtual int getHp();			// returns current hp
 };
 
 #endif
