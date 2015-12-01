@@ -2,7 +2,6 @@
 #define TROLL_H
 #include "Player.h"
 
-#pragma once
 class Troll : public Player
 {
 public:

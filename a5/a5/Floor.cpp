@@ -220,6 +220,9 @@ void Floor::generatePlayer(string race) {
 	else if (race == "goblin") {
 
 	}
+	// Checks the vicinity and adds some messages to the Action queue
+	actionQueue += " A " + race + " has spawned.";
+	player->interactVicinity();
 }
 //Generates a random potion
 void Floor::generatePotion() {

@@ -2,7 +2,6 @@
 #define VAMPIRE_H
 #include "Player.h"
 
-#pragma once
 class Vampire : public Player
 {
 public:

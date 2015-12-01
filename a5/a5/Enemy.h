@@ -12,7 +12,7 @@ public:
 	Enemy(int, int, char, Floor *);
 	~Enemy();
 	virtual void death();
-	void movement();
+	virtual void movement();
 	void resetMove();
 	virtual void attack(Creature*);
 };
