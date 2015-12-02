@@ -11,6 +11,6 @@ public:
 	Human(int, int, Floor*);
 	~Human();
 	void death();		// Custom death method to spawn 2 gold piles
-	void makeGold(int, int);
+	void makeGold(int, int, Floor*);
 };
 

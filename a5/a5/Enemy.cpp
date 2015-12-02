@@ -19,6 +19,7 @@ Enemy::~Enemy() {
 
 void Enemy::death() {
 	// Makes temporary cell *, swaps and deletes
+	cout << "Not human death. posX value: " << posX << "   posY value: " << posY << endl;
 	Cell * hold = floor->grid[posX][posY];
 	floor->grid[posX][posY] = new Cell(posX, posY, '.');
 	delete hold;

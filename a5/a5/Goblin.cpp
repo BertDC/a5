@@ -4,10 +4,10 @@
 
 Goblin::Goblin(int x, int y, int ch, Floor *flr) : Player(x, y, ch, flr)
 {
-	hp = 120;
-	maxHp = 120;
-	atk = 25;
-	def = 15;
+	hp = 110;
+	maxHp = 110;
+	atk = 15;
+	def = 20;
 	name = "Goblin";
 	chamber = ch;
 }

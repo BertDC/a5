@@ -14,29 +14,34 @@ Human::Human(int x, int y, Floor *floor) :  Enemy(x, y, 'H', floor) {
 // The Human's custom death method (spawns 2 piles of gold)
 void Human::death() {
 	// Makes temporary cell *, swaps and deletes
+	cout << "posX value: " << posX << "   posY value: " << posY << endl;
 	Human * hold = dynamic_cast<Human *>(floor->grid[posX][posY]);
 	// Makes the first pile of gold where the human was
+	int x = posX;
+	int y = posY;
+	Floor *flr = floor;
 	floor->grid[posX][posY] = new Gold(posX, posY, 2);
 	delete hold;
 	// Makes the second pile of gold in the nearest area
-	makeGold(posX, posY);
+	makeGold(x, y, flr);
 }
 
 // Attempts to make a gold pile around the given coordinates
-void Human::makeGold(int x, int y) {
+void Human::makeGold(int x, int y, Floor *floor) {
+	cout << "posX value: " << posX << "   posY value: " << posY << endl;
 	// Determines the symbols of surrounding blocks
-	char no = floor->grid[posX - 1][posY]->getSymbol();
-	char so = floor->grid[posX + 1][posY]->getSymbol();
-	char ea = floor->grid[posX][posY + 1]->getSymbol();
-	char we = floor->grid[posX][posY - 1]->getSymbol();
-	char nw = floor->grid[posX - 1][posY - 1]->getSymbol();
-	char ne = floor->grid[posX - 1][posY + 1]->getSymbol();
-	char sw = floor->grid[posX + 1][posY - 1]->getSymbol();
-	char se = floor->grid[posX + 1][posY + 1]->getSymbol();
+	char no = floor->grid[x - 1][y]->getSymbol();
+	char so = floor->grid[x + 1][y]->getSymbol();
+	char ea = floor->grid[x][y + 1]->getSymbol();
+	char we = floor->grid[x][y - 1]->getSymbol();
+	char nw = floor->grid[x - 1][y - 1]->getSymbol();
+	char ne = floor->grid[x - 1][y + 1]->getSymbol();
+	char sw = floor->grid[x + 1][y - 1]->getSymbol();
+	char se = floor->grid[x + 1][y + 1]->getSymbol();
 
 	// If we can't find a valid location then we try the next vicinity
 	if (se != '.' && ne != '.' && nw != '.' && ea != '.' && we != '.' && so != '.' && no != '.' && sw != '.') {
-		makeGold(x + (rand() % 2 - 1), y + (rand() % 2 - 1));
+		makeGold(x + (rand() % 2 - 1), y + (rand() % 2 - 1), floor);
 		return;
 	}
 
