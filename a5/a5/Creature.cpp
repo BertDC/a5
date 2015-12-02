@@ -31,7 +31,3 @@ string Creature::getName() {
 double Creature::getDefense() {
 	return def;
 }
-
-void Creature::death() {
-
-}

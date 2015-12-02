@@ -18,16 +18,19 @@ Enemy::~Enemy() {
 }
 
 void Enemy::death() {
-	delete floor->grid[posX][posY];
-	floor->grid[posX][posY] = new Gold(posX, posY, (rand() % 2) + 1);
+	// Makes temporary cell *, swaps and deletes
+	cerr << "Deleting via Enemy" << endl;
+	Cell * hold = floor->grid[posX][posY];
+	floor->grid[posX][posY] = new Cell(posX, posY, '.');
+	delete hold;
 }
 
 void Enemy::attack(Creature *defender) {
 	double damage = ceil((100 / (100 + defender->getDefense()))*atk);
-	defender->loseHp(damage);
 	stringstream ss;
 	ss << " You were struck for " << damage << " damage by the " << name << ".";
 	floor->actionQueue += ss.str();
+	defender->loseHp(damage);
 }
 
 // Resets the movement flag, so that we dont move a second time

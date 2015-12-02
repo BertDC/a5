@@ -3,7 +3,6 @@
 #include "Creature.h"
 #include "Floor.h"
 
-
 class Floor;
 
 class Enemy : public Creature {

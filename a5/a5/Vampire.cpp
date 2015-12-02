@@ -20,8 +20,6 @@ Vampire::~Vampire()
 
 void Vampire::attack(Creature *defender) {
 	int damage = ceil((100 / (100 + defender->getDefense()))*(atk + atkMod));
-	if (defender->getSymbol() == 'L') {
-		if (rand() % 2 == 1) {
 			defender->loseHp(damage);
 			if (defender->getSymbol() == 'W')
 				loseHp(5);
