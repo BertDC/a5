@@ -1,4 +1,5 @@
 #include "Shade.h"
+#include <sstream>
 using namespace std;
 
 
@@ -12,6 +13,11 @@ Shade::Shade(int x, int y, int ch, Floor *flr) : Player(x, y, ch, flr)
 	chamber = ch;
 }
 
+void Shade::displayScore() {
+	stringstream ss;
+	ss << endl << "Your run has ended. You achieved a score of " << gold*2 << "." << endl;;
+	floor->actionQueue += ss.str();
+}
 
 Shade::~Shade() {
 

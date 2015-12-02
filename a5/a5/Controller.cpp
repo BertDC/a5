@@ -70,7 +70,11 @@ void Controller::play() {
 		}
 		// reset
 		if (cmd == "r") {
-			cout << "Restarted" << endl;
+			for (int i = 0; i < 5; i++) {
+				delete floor[i];
+			}
+			currentLevel = 0;
+			hasSelected = false;
 		}
 		// quit
 		else if (cmd == "q") {

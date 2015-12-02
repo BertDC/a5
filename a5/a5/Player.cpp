@@ -175,12 +175,7 @@ void Player::death() {
 
 void Player::displayScore() {
 	stringstream ss;
-	int score;
-	if (name == "Shade")
-		score = gold * 2;
-	else
-		score = gold;
-	ss << endl << "Your run has ended. You achieved a score of " << score << "." << endl;;
+	ss << endl << "Your run has ended. You achieved a score of " << gold << "." << endl;;
 	floor->actionQueue += ss.str();
 }
 
