@@ -121,6 +121,7 @@
     <ClInclude Include="cell.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Creature.h" />
+    <ClInclude Include="Dragon.h" />
     <ClInclude Include="Drow.h" />
     <ClInclude Include="Dwarf.h" />
     <ClInclude Include="Elf.h" />
@@ -144,6 +145,7 @@
     <ClCompile Include="cell.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Creature.cpp" />
+    <ClCompile Include="Dragon.cpp" />
     <ClCompile Include="Drow.cpp" />
     <ClCompile Include="Dwarf.cpp" />
     <ClCompile Include="Elf.cpp" />

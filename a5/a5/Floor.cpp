@@ -45,6 +45,10 @@ int Floor::getLevel() { return level; }
 // Checks if the player has aggravated the Merchants in the current run
 bool Floor::getPlayerHostile() { return player->getAggroMerch(); }
 
+void Floor::setAlive(bool alv) { alive = alv; }
+
+bool Floor::getAlive() { return alive; }
+
 // Adds the neighbours of a Cell to the chamber if required
 void Floor::addNeighbours(int row, int col, int chamber) {
 	// Goes through 4 neighbours and adds them the chamber if it can

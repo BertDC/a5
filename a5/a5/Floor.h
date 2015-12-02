@@ -27,6 +27,8 @@ public:
 	void playerAttack(std::string);
 	void playerUse(std::string);
 	bool getPlayerHostile();					// Checks if the player has aggravated the Merchants in the current run
+	void setAlive(bool);							
+	bool getAlive();
 	void generatePlayer(std::string);
 	void generatePotion();
 	void generateStairs();

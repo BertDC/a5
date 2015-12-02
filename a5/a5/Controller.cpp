@@ -23,13 +23,7 @@ void Controller::play() {
 	string cmd;
 	bool hasSelected = false;
 	// Race select screen
-	cout << "Welcome to ChamberCrawler3000!" << endl;
-	cout << "Please select a valid race, or enter q to quit:" << endl;
-	cout << ">  (s)hade:   125 HP, 25 ATK, 25 DEF - 50% increased score" << endl;
-	cout << ">  (d)row:    150 HP, 25 ATK, 15 DEF - 1.5x amplification to potions" << endl;
-	cout << ">  (v)ampire:  50 HP, 25 ATK, 25 DEF - No max HP. Gains 5 HP upon successful attack" << endl;
-	cout << ">  (t)roll:   120 HP, 25 ATK, 15 DEF - Heals for 5 HP every turn" << endl;
-	cout << ">  (g)oblin:  110 HP, 15 ATK, 20 DEF - Steals 5 gold from each enemy slain" << endl;
+	printCharOptions();
 
 	// Command interpreter loop
 	while (cin >> cmd) {
@@ -69,10 +63,28 @@ void Controller::play() {
 				floor[currentLevel]->print();
 				hasSelected = true;
 			}
+			floor[currentLevel]->setAlive(true);
+		}
+		// reset
+		if (cmd == "r") {
+			for (int i = 0; i < 5; i++) {
+				delete floor[i];
+			}
+			currentLevel = 0;
+			hasSelected = false;
+			printCharOptions();
+			floor[0] = new Floor(currentLevel);
+		}
+		// quit
+		else if (cmd == "q") {
+			break;
+		}
+		else if (floor[currentLevel]->getAlive() == false) {
+			cout << "Not a valid command at this time. Press 'r' to restart or 'q' to quit the game." << endl;
 		}
 		// The normal commands that can be issued when the game has started
 		// Checks all directions
-		if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
+		else if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
 			|| cmd == "nw" || cmd == "ne" || cmd == "sw" || cmd == "se") {
 			floor[currentLevel]->playerMove(cmd);
 		}
@@ -96,17 +108,19 @@ void Controller::play() {
 				floor[currentLevel]->playerAttack(cmd);
 			}
 		}
-		// reset
-		else if (cmd == "r") {
-
-		}
-		// quit
-		else if (cmd == "q") {
-			break;
-		}
 		// Debug (prints the floor)
 		else if (cmd == "p") {
 			floor[currentLevel]->print();
 		}
 	}
+}
+
+void Controller::printCharOptions(){
+	cout << "Welcome to ChamberCrawler3000!" << endl;
+	cout << "Please select a valid race, or enter q to quit:" << endl;
+	cout << ">  (s)hade:   125 HP, 25 ATK, 25 DEF - 50% increased score" << endl;
+	cout << ">  (d)row:    150 HP, 25 ATK, 15 DEF - 1.5x amplification to potions" << endl;
+	cout << ">  (v)ampire:  50 HP, 25 ATK, 25 DEF - No max HP. Gains 5 HP upon successful attack" << endl;
+	cout << ">  (t)roll:   120 HP, 25 ATK, 15 DEF - Heals for 5 HP every turn" << endl;
+	cout << ">  (g)oblin:  110 HP, 15 ATK, 20 DEF - Steals 5 gold from each enemy slain" << endl;
 }

@@ -167,7 +167,16 @@ bool Player::movement(string dir) {
 
 
 void Player::death() {
+	floor->actionQueue += "You have perished.";
+	displayScore();
+	floor->setAlive(false);
+	floor->actionQueue += "Press 'q' to exit or 'r' to try again.";
+}
 
+void Player::displayScore() {
+	stringstream ss;
+	ss << endl << "Your run has ended. You achieved a score of " << gold << "." << endl;;
+	floor->actionQueue += ss.str();
 }
 
 

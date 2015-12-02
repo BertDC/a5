@@ -7,6 +7,7 @@ class Shade : public Player
 public:
 	Shade(int, int, int, Floor*);
 	~Shade();
+	void displayScore();
 };
 
 #endif
