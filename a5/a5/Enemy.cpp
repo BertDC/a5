@@ -19,7 +19,6 @@ Enemy::~Enemy() {
 
 void Enemy::death() {
 	// Makes temporary cell *, swaps and deletes
-	cerr << "Deleting via Enemy" << endl;
 	Cell * hold = floor->grid[posX][posY];
 	floor->grid[posX][posY] = new Cell(posX, posY, '.');
 	delete hold;

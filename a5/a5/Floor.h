@@ -8,14 +8,6 @@
 class Controller;
 class Player;
 
-class Pos {
-public:
-	Pos(int x, int y);
-	~Pos();
-	int row;
-	int col;
-};
-
 class Floor {
 	
 	Player *player;					// pointer to the Player abstract class

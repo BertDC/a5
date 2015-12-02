@@ -338,7 +338,7 @@ void Floor::generateDragon(int x, int y, Gold * pile) {
 		// If a '.' is found, makes a Dragon
 		if (grid[x2][y2]->getSymbol() == '.') {
 			delete grid[x2][y2];
-			theDragon = new Dragon(x2, y2, this);
+			theDragon = new Dragon(x2, y2, this, pile);
 			grid[x2][y2] = theDragon;
 			break;
 		}

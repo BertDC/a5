@@ -1,5 +1,6 @@
 #include "Troll.h"
-
+#include <math.h>
+using namespace std;
 
 
 Troll::Troll(int x, int y, int ch, Floor *flr) : Player(x, y, ch, flr)
@@ -30,7 +31,10 @@ bool Troll::movement(std::string location) {
 }
 
 bool Troll::consumePotion(std::string dir) {
-	hp = fmin(hp + 5, maxHp);
-	return Player::consumePotion(dir);
+	bool consumed = Player::consumePotion(dir);
+	if (consumed) {
+		hp = fmin(hp + 5, maxHp);
+	}
+	return consumed;
 	
 }

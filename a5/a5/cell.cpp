@@ -18,6 +18,11 @@ Cell::Cell(int x, int y, char sym, bool move)
 	inChamber = false;
 }
 
+// Gets the cell's location
+Pos Cell::getLocation() {
+	Pos pos(posX, posY);
+	return pos;
+}
 
 Cell::~Cell()
 {

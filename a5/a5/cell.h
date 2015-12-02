@@ -1,5 +1,14 @@
 #ifndef CELL_H
 #define CELL_H
+
+class Pos {
+public:
+	Pos(int x, int y);
+	~Pos();
+	int row;
+	int col;
+};
+
 class Cell
 {
 protected:
@@ -17,6 +26,7 @@ public:
 	char getSymbol();		// Returns the symbol associated to this cell
 	virtual int getType(); //Used for determining type of gold/potion collected
 	virtual void movement();
+	virtual Pos getLocation();		// Gets the cell location
 };
 
 #endif

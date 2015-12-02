@@ -14,6 +14,7 @@ protected:
 	int gold;			//Player's current gold
 	bool knownPots[6];	//Potions discovered by the player character
 	char prev;			//Previous tile the character was on
+	Gold * dHoard;		//Holds the pointer to the dragon hoard so it can be spawned back
 	
 public:
 	Player(int, int, int, Floor*);
@@ -25,7 +26,6 @@ public:
 	virtual bool consumePotion(std::string);
 	virtual bool attemptStrike(std::string);
 	virtual void death();
-	virtual Pos getLocation();		// Gets the player location
 	void printStats();		// Prints the player's stats to cout
 	void interactVicinity();	//Performs interactions based on surroundings (ie take damage from enemy, spot unknown potion)
 };
