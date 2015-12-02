@@ -19,18 +19,18 @@ Troll::~Troll()
 
 void Troll::attack(Creature *defender){
 	Player::attack(defender);
-	hp += 5;
+	hp = fmin(hp+5, maxHp);
 }
 
 bool Troll::movement(std::string location) {
 	bool moved = Player::movement(location);
 	if (moved)
-		hp += 5;
+		hp = fmin(hp + 5, maxHp);
 	return moved;
 }
 
 bool Troll::consumePotion(std::string dir) {
-	hp += 5;
+	hp = fmin(hp + 5, maxHp);
 	return Player::consumePotion(dir);
 	
 }

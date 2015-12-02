@@ -627,7 +627,7 @@ bool Player::consumePotion(string dir) {
 		floor->actionQueue += " You feel your skin harden. Odd. Gain 5 defense.";
 	}
 	else if (type == 6) {
-		floor->actionQueue += " One problem down";
+		floor->actionQueue += " ERROR";
 	}
 	//Player will recognize the consumed potion from this point onwards
 	knownPots[type] = true;
