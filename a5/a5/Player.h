@@ -28,6 +28,7 @@ public:
 	virtual bool consumePotion(std::string);
 	virtual bool attemptStrike(std::string);
 	virtual void death();
+	void displayScore();
 	void giveGold(int x);		// Gives the player x gold
 	void printStats();			// Prints the player's stats to cout
 	void interactVicinity();	//Performs interactions based on surroundings (ie take damage from enemy, spot unknown potion)

@@ -66,10 +66,22 @@ void Controller::play() {
 				floor[currentLevel]->print();
 				hasSelected = true;
 			}
+			floor[currentLevel]->setAlive(true);
+		}
+		// reset
+		if (cmd == "r") {
+			cout << "Restarted" << endl;
+		}
+		// quit
+		else if (cmd == "q") {
+			break;
+		}
+		else if (floor[currentLevel]->getAlive() == false) {
+			cout << "Not a valid command at this time. Press 'r' to restart or 'q' to quit the game." << endl;
 		}
 		// The normal commands that can be issued when the game has started
 		// Checks all directions
-		if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
+		else if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
 			|| cmd == "nw" || cmd == "ne" || cmd == "sw" || cmd == "se") {
 			floor[currentLevel]->playerMove(cmd);
 		}
@@ -92,14 +104,6 @@ void Controller::play() {
 				|| cmd == "nw" || cmd == "ne" || cmd == "sw" || cmd == "se") {
 				floor[currentLevel]->playerAttack(cmd);
 			}
-		}
-		// reset
-		else if (cmd == "r") {
-
-		}
-		// quit
-		else if (cmd == "q") {
-			break;
 		}
 		// Debug (prints the floor)
 		else if (cmd == "p") {

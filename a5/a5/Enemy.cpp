@@ -32,12 +32,13 @@ void Enemy::attack(Creature *defender) {
 	// 50% chance of missing
 	if (rand() % 2 == 0) {
 		ss << " A " << name << " attempts to attack you, but misses!";
+		floor->actionQueue += ss.str();
 	}
 	else {
 		ss << " You were struck for " << damage << " damage by the " << name << ".";
+		floor->actionQueue += ss.str();
 		defender->loseHp(damage);
 	}
-	floor->actionQueue += ss.str();
 }
 
 // Resets the movement flag, so that we dont move a second time
