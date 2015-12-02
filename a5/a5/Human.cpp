@@ -3,8 +3,7 @@
 #include <cstdlib>
 using namespace std;
 
-Human::Human(int x, int y, Floor *floor) :  Enemy(x, y, 'H', floor)
-{
+Human::Human(int x, int y, Floor *floor) :  Enemy(x, y, 'H', floor) {
 	maxHp = 140;
 	hp = 140;
 	atk = 20;
@@ -58,6 +57,6 @@ void Human::makeGold(int x, int y) {
 }
 
 
-Human::~Human()
-{
+Human::~Human() {
+
 }

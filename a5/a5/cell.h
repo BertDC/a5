@@ -12,7 +12,7 @@ protected:
 public:
 	Cell(int, int, char);
 	Cell(int, int, char, bool);
-	~Cell();
+	virtual ~Cell();
 	bool inChamber;			// Whether the Cell has already been added to a chamber or not
 	char getSymbol();		// Returns the symbol associated to this cell
 	virtual int getType(); //Used for determining type of gold/potion collected

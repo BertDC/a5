@@ -1,9 +1,10 @@
 #include "Gold.h"
+#include <iostream>
 
 Gold::Gold(int x, int y, int s) : Item(x, y, 'G')
 {
 	size = s;
-	//comment
+	dragon = NULL;
 }
 
 int Gold::getType() {

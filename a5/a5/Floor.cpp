@@ -3,6 +3,7 @@
 #include "Drow.h"
 #include "Vampire.h"
 #include "Human.h"
+#include "Dragon.h"
 #include "cell.h"
 #include "Gold.h"
 #include <fstream>
@@ -312,14 +313,39 @@ void Floor::generateGold() {
 	}
 	else {									// 1 in 8 chances for dragon hoard
 		size = 6;
-		// Spawns a dragon at the gold Hoard position
-		//spawnDragon(posRow, posCol, this, 'D');
 	}
 
 	// Delete whichever floor cell was previously there
 	delete grid[posRow][posCol];
 	// Makes the new potion at that position
-	grid[posRow][posCol] = new Gold(posRow, posCol, size);
+	Gold * pile = new Gold(posRow, posCol, size);
+	grid[posRow][posCol] = pile;
+	// If it was a dragon hoard, we spawn a dragon and attatch it to the gold pile
+	if (size == 6) {
+		generateDragon(posRow, posCol, pile);
+	}
+	
+}
+
+void Floor::generateDragon(int x, int y, Gold * pile) {
+	Dragon * theDragon;
+	// randomly creates the dragon somewhere connected to the dragonHoard
+	while (true) {
+		//Randomly selects a tile in the vicinity
+		int x2 = x + (rand() % 3 - 1);
+		int y2 = y + (rand() % 3 - 1);
+
+		// If a '.' is found, makes a Dragon
+		if (grid[x2][y2]->getSymbol() == '.') {
+			delete grid[x2][y2];
+			theDragon = new Dragon(x2, y2, this);
+			grid[x2][y2] = theDragon;
+			break;
+		}
+	}
+
+	// Attatches the dragon to the pile
+	pile->dragon = theDragon;
 }
 
 void Floor::generateEnemy() {

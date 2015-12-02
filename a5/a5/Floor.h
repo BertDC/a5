@@ -39,6 +39,7 @@ public:
 	void generateStairs();
 	void generateGold();
 	void generateEnemy();
+	void generateDragon(int, int, Gold *);
 	void clearFloor();
 	void makeChambers();						// After a floor has been initialized, this will create the chambers.
 	void addToChamber(int, int, int);			// Adds a cell at grid[row][col] to a chamber
@@ -46,9 +47,7 @@ public:
 	void print();								// prints out the floor layout
 	void updateEnemies();						//Updates the positions of all enemies on the floor
 	int chamberPos(Pos);						// Given a position, returns which chamber its in
-	int getLevel();
-	//void isAlive();							// returns the isAlive 
-	//bool checkLife();							// Check's the player's life total
+	int getLevel();								// Returns the level that this floor is on
 };
 
 #endif
