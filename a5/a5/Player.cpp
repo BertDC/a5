@@ -274,6 +274,10 @@ bool Player::consumePotion(string dir) {
 	return true;
 }
 
+void Player::giveGold(int x) {
+	gold += x;
+}
+
 double Player::getDefense() {
 	return def + defMod;
 }

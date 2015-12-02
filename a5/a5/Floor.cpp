@@ -10,7 +10,7 @@
 #include "Orc.h"
 #include "Halfling.h"
 #include "Merchant.h"
-//#include "Dragon.h"
+#include "Dragon.h"
 #include "cell.h"
 #include "Gold.h"
 #include <fstream>
@@ -346,8 +346,7 @@ void Floor::generateGold() {
 }
 
 void Floor::generateDragon(int x, int y, Gold * pile) {
-	return;
-	/*Dragon * theDragon;
+	Dragon * theDragon;
 	// randomly creates the dragon somewhere connected to the dragonHoard
 	while (true) {
 		//Randomly selects a tile in the vicinity
@@ -365,7 +364,7 @@ void Floor::generateDragon(int x, int y, Gold * pile) {
 
 	// Attatches the dragon to the pile
 	pile->dragon = theDragon;
-	*/
+	
 }
 
 void Floor::generateEnemy() {
@@ -387,7 +386,7 @@ void Floor::generateEnemy() {
 	// Delete whichever floor cell was previously there
 	delete grid[posRow][posCol];
 	// Now that it has found a correct location, we determine the type of Enemy and then spawn it
-	int type = rand() % 90;					// random number between 0 and 17 for Enemy type odds
+	int type = rand() % 18;					// random number between 0 and 17 for Enemy type odds
 	if (type >= 0 && type < 4) {			// 2 in 9 chances for Human
 		grid[posRow][posCol] = new Human(posRow, posCol, this);
 	}
@@ -406,6 +405,10 @@ void Floor::generateEnemy() {
 	else {									// 1 in 9 chances for Merchant
 		grid[posRow][posCol] = new Merchant(posRow, posCol, this);
 	}
+}
+
+void Floor::giveGold(int gold) {
+	player->giveGold(gold);
 }
 
 void Floor::clearFloor() {

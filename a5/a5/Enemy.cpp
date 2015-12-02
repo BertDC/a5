@@ -20,7 +20,9 @@ Enemy::~Enemy() {
 void Enemy::death() {
 	// Makes temporary cell *, swaps and deletes
 	Cell * hold = floor->grid[posX][posY];
-	floor->grid[posX][posY] = new Gold(posX, posY, (rand() % 2) + 1);
+	// For normal enemies, they simply give the player 1 or 2 gold
+	floor->giveGold((rand() % 2) + 1);
+	floor->grid[posX][posY] = new Cell(posX, posY, '.');
 	delete hold;
 }
 

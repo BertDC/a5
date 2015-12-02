@@ -1,5 +1,6 @@
 #include "Merchant.h"
 #include "Player.h"
+#include <cstdlib>
 using namespace std;
 
 

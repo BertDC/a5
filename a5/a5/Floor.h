@@ -33,6 +33,7 @@ public:
 	void generateGold();
 	void generateEnemy();
 	void generateDragon(int, int, Gold *);
+	void giveGold(int x);							// gives the player x amount of gold
 	void clearFloor();
 	void makeChambers();						// After a floor has been initialized, this will create the chambers.
 	void addToChamber(int, int, int);			// Adds a cell at grid[row][col] to a chamber
