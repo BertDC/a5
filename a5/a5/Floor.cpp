@@ -9,6 +9,7 @@
 #include "Elf.h"
 #include "Orc.h"
 #include "Halfling.h"
+#include "Merchant.h"
 //#include "Dragon.h"
 #include "cell.h"
 #include "Gold.h"
@@ -40,6 +41,9 @@ Floor::~Floor() {
 }
 
 int Floor::getLevel() { return level; }
+
+// Checks if the player has aggravated the Merchants in the current run
+bool Floor::getPlayerHostile() { return player->getAggroMerch(); }
 
 // Adds the neighbours of a Cell to the chamber if required
 void Floor::addNeighbours(int row, int col, int chamber) {
@@ -383,7 +387,7 @@ void Floor::generateEnemy() {
 	// Delete whichever floor cell was previously there
 	delete grid[posRow][posCol];
 	// Now that it has found a correct location, we determine the type of Enemy and then spawn it
-	int type = rand() % 18;					// random number between 0 and 17 for Enemy type odds
+	int type = rand() % 90;					// random number between 0 and 17 for Enemy type odds
 	if (type >= 0 && type < 4) {			// 2 in 9 chances for Human
 		grid[posRow][posCol] = new Human(posRow, posCol, this);
 	}
@@ -400,7 +404,7 @@ void Floor::generateEnemy() {
 		grid[posRow][posCol] = new Orc(posRow, posCol, this);
 	}
 	else {									// 1 in 9 chances for Merchant
-		grid[posRow][posCol] = new Human(posRow, posCol, this);
+		grid[posRow][posCol] = new Merchant(posRow, posCol, this);
 	}
 }
 

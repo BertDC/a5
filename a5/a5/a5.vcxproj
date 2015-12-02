@@ -131,6 +131,7 @@
     <ClInclude Include="Halfling.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Merchant.h" />
     <ClInclude Include="Orc.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Potion.h" />
@@ -154,6 +155,7 @@
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Potion.cpp" />

@@ -16,6 +16,7 @@ Player::Player(int x, int y, int ch, Floor *flr) : Creature(x, y, '@', flr) {
 	for (int i = 0; i < 5; i++) {
 		knownPots[i] = false;
 	}
+	aggroMerch = false;
 }
 
 
@@ -201,7 +202,9 @@ bool Player::attemptStrike(string dir) {
 	}
 	// attacking a Merchant
 	else if (symbol == 'M') {
-
+		aggroMerch = true;
+		attack(dynamic_cast<Creature*>(floor->grid[x][y]));
+		return true;
 	}
 	// attacking a Halfling
 	else if (symbol == 'L') {
@@ -273,6 +276,10 @@ bool Player::consumePotion(string dir) {
 
 double Player::getDefense() {
 	return def + defMod;
+}
+
+bool Player::getAggroMerch() {
+	return aggroMerch;
 }
 
 void Player::interactVicinity() {

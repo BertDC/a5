@@ -14,12 +14,14 @@ protected:
 	int gold;			//Player's current gold
 	bool knownPots[6];	//Potions discovered by the player character
 	char prev;			//Previous tile the character was on
+	bool aggroMerch;
 	Gold * dHoard;		//Holds the pointer to the dragon hoard so it can be spawned back
 	
 public:
 	Player(int, int, int, Floor*);
 	virtual ~Player() = 0;
 	int getChamber();
+	bool getAggroMerch();
 	virtual double getDefense();
 	virtual void attack(Creature *);
 	virtual bool movement(std::string);

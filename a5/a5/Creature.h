@@ -23,7 +23,7 @@ public:
 	virtual void loseHp(double);		//Subtracts battle damage from current health value and determines if death occurs
 	virtual void death() = 0;			//Called upon taking fatal damage
 	virtual double getDefense();		//Returns def Integer
-	virtual double getHp();			// returns current hp
+	virtual double getHp();				// returns current hp
 	virtual std::string getName();	// returns name
 };
 
