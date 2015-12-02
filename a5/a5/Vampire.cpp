@@ -19,21 +19,11 @@ Vampire::~Vampire()
 }
 
 void Vampire::attack(Creature *defender) {
-	int damage = ceil((100 / (100 + defender->getDefense()))*(atk + atkMod));
-			defender->loseHp(damage);
+	Player::attack(defender);
 			if (defender->getSymbol() == 'W')
 				loseHp(5);
 			else
 				hp += 5;
-		}
-	}
-	else {
-		defender->loseHp(damage);
-		if (defender->getSymbol() == 'W')
-			loseHp(5);
-		else
-			hp += 5;
-	}
 }
 
 bool Vampire::consumePotion(std::string dir) {

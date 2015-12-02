@@ -113,12 +113,6 @@
     <ClCompile Include="Troll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Goblin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Dragon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="a5.rc">
