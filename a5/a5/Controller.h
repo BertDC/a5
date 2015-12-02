@@ -11,6 +11,7 @@ class Controller {
 	Floor *floor[5];		// The array containing 5 floor pointers
 	std::fstream *file;
 	int currentLevel;
+	void printCharOptions();
 public:
 	Controller(std::string filename);	// Default ctor.
 	~Controller();
