@@ -2,8 +2,14 @@
 #include "Shade.h"
 #include "Drow.h"
 #include "Vampire.h"
+#include "Troll.h"
+#include "Goblin.h"
 #include "Human.h"
-#include "Dragon.h"
+#include "Dwarf.h"
+#include "Elf.h"
+#include "Orc.h"
+#include "Halfling.h"
+//#include "Dragon.h"
 #include "cell.h"
 #include "Gold.h"
 #include <fstream>
@@ -218,10 +224,18 @@ void Floor::generatePlayer(string race) {
 		grid[posRow][posCol] = player;
 	}
 	else if (race == "troll") {
-
+		// Delete whichever floor cell was previously there
+		delete grid[posRow][posCol];
+		// Makes the new player character at that position
+		player = new Troll(posRow, posCol, chamberSpawn, this);
+		grid[posRow][posCol] = player;
 	}
 	else if (race == "goblin") {
-
+		// Delete whichever floor cell was previously there
+		delete grid[posRow][posCol];
+		// Makes the new player character at that position
+		player = new Goblin(posRow, posCol, chamberSpawn, this);
+		grid[posRow][posCol] = player;
 	}
 	// adds some messages to the Action queue
 	actionQueue += " A " + race + " has spawned.";
@@ -328,7 +342,8 @@ void Floor::generateGold() {
 }
 
 void Floor::generateDragon(int x, int y, Gold * pile) {
-	Dragon * theDragon;
+	return;
+	/*Dragon * theDragon;
 	// randomly creates the dragon somewhere connected to the dragonHoard
 	while (true) {
 		//Randomly selects a tile in the vicinity
@@ -346,6 +361,7 @@ void Floor::generateDragon(int x, int y, Gold * pile) {
 
 	// Attatches the dragon to the pile
 	pile->dragon = theDragon;
+	*/
 }
 
 void Floor::generateEnemy() {
@@ -372,16 +388,16 @@ void Floor::generateEnemy() {
 		grid[posRow][posCol] = new Human(posRow, posCol, this);
 	}
 	else if (type >= 4 && type < 7) {		// 3 in 18 chances for Dwarf
-		grid[posRow][posCol] = new Human(posRow, posCol, this);
+		grid[posRow][posCol] = new Dwarf(posRow, posCol, this);
 	}
 	else if (type >= 7 && type < 12) {		// 5 in 18 chances for Halfling
-		grid[posRow][posCol] = new Human(posRow, posCol, this);
+		grid[posRow][posCol] = new Halfling(posRow, posCol, this);
 	}
 	else if (type >= 12 && type < 14) {		// 1 in 9 chances for Elf
-		grid[posRow][posCol] = new Human(posRow, posCol, this);
+		grid[posRow][posCol] = new Elf(posRow, posCol, this);
 	}
 	else if (type >= 14 && type < 16) {		// 1 in 9 chances for Orc
-		grid[posRow][posCol] = new Human(posRow, posCol, this);
+		grid[posRow][posCol] = new Orc(posRow, posCol, this);
 	}
 	else {									// 1 in 9 chances for Merchant
 		grid[posRow][posCol] = new Human(posRow, posCol, this);

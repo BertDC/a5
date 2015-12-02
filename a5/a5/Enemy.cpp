@@ -19,18 +19,23 @@ Enemy::~Enemy() {
 
 void Enemy::death() {
 	// Makes temporary cell *, swaps and deletes
-	cout << "Not human death. posX value: " << posX << "   posY value: " << posY << endl;
 	Cell * hold = floor->grid[posX][posY];
-	floor->grid[posX][posY] = new Cell(posX, posY, '.');
+	floor->grid[posX][posY] = new Gold(posX, posY, (rand() % 2) + 1);
 	delete hold;
 }
 
 void Enemy::attack(Creature *defender) {
 	double damage = ceil((100 / (100 + defender->getDefense()))*atk);
 	stringstream ss;
-	ss << " You were struck for " << damage << " damage by the " << name << ".";
+	// 50% chance of missing
+	if (rand() % 2 == 0) {
+		ss << " A " << name << " attempts to attack you, but misses!";
+	}
+	else {
+		ss << " You were struck for " << damage << " damage by the " << name << ".";
+		defender->loseHp(damage);
+	}
 	floor->actionQueue += ss.str();
-	defender->loseHp(damage);
 }
 
 // Resets the movement flag, so that we dont move a second time
@@ -55,11 +60,6 @@ void Enemy::movement() {
 
 	// If the enemy is within range of the PC, it ATTACKS instead of moving
 	if (se == '@' || ne == '@' || nw == '@' || ea == '@' || we == '@' || so == '@' || no == '@' || sw == '@') {
-		// 50% chance of missing
-		if (rand() % 2 == 0) {
-			floor->actionQueue += (" A " + name + " attempts to attack you, but misses!");
-		}
-		else {
 			// Determines which cell was the Player Character, then attacks it
 			if (se == '@') attack(dynamic_cast<Creature*>(floor->grid[posX + 1][posY + 1]));
 			if (sw == '@') attack(dynamic_cast<Creature*>(floor->grid[posX + 1][posY - 1]));
@@ -69,7 +69,6 @@ void Enemy::movement() {
 			if (ea == '@') attack(dynamic_cast<Creature*>(floor->grid[posX][posY + 1]));
 			if (so == '@') attack(dynamic_cast<Creature*>(floor->grid[posX + 1][posY]));
 			if (no == '@') attack(dynamic_cast<Creature*>(floor->grid[posX - 1][posY]));
-		}
 		hasMoved = true;
 		return;
 	}

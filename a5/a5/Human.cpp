@@ -14,7 +14,6 @@ Human::Human(int x, int y, Floor *floor) :  Enemy(x, y, 'H', floor) {
 // The Human's custom death method (spawns 2 piles of gold)
 void Human::death() {
 	// Makes temporary cell *, swaps and deletes
-	cout << "posX value: " << posX << "   posY value: " << posY << endl;
 	Human * hold = dynamic_cast<Human *>(floor->grid[posX][posY]);
 	// Makes the first pile of gold where the human was
 	int x = posX;
@@ -28,7 +27,6 @@ void Human::death() {
 
 // Attempts to make a gold pile around the given coordinates
 void Human::makeGold(int x, int y, Floor *floor) {
-	cout << "posX value: " << posX << "   posY value: " << posY << endl;
 	// Determines the symbols of surrounding blocks
 	char no = floor->grid[x - 1][y]->getSymbol();
 	char so = floor->grid[x + 1][y]->getSymbol();
