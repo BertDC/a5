@@ -8,6 +8,9 @@ using namespace std;
 Controller::Controller(string filename) : currentLevel(0) {
 	file = new fstream(filename.c_str());
 	floor[0] = new Floor(currentLevel);
+	for (int i = 1; i < 5; i++) {
+		floor[i] = NULL;
+	}
 }
 
 

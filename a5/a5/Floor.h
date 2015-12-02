@@ -42,6 +42,7 @@ public:
 	void updateEnemies();						//Updates the positions of all enemies on the floor
 	int chamberPos(Pos);						// Given a position, returns which chamber its in
 	int getLevel();								// Returns the level that this floor is on
+	bool playerExists();						// Returns if the player exists on this floor
 };
 
 #endif
