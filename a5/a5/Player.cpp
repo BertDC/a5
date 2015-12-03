@@ -159,6 +159,7 @@ bool Player::movement(string dir) {
 	}
 	// Player encounters the stairs
 	if (floor->grid[x][y]->getSymbol() == '\\') {
+		floor->moveLevel();
 		return true;
 	}
 	// Player can't make a move
@@ -179,6 +180,9 @@ void Player::displayScore() {
 	floor->actionQueue += ss.str();
 }
 
+void Player::setPosX(int x) { posX = x; }
+
+void Player::setPosY(int y) { posY = y; }
 
 void Player::attack(Creature *defender) {
 	// Calculates and deals the damage

@@ -101,6 +101,7 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 	controller = c;		// Allows this Floor to access the Controller
 	char ch;				// Holds each individual character, includes whitespace
 	string line;			// Holds a row from the file
+	Floor::file = file;
 	grid = new Cell**[25];		// 25 rows
 	for (int i = 0; i < 25; i++) {
 		grid[i] = new Cell*[79];	// 79 columns
@@ -178,7 +179,10 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 	makeChambers();
 
 	// If it wasn't a predetermined map, then we generate the players/enemies in the correct order
-	generatePlayer(race);
+	if (player == NULL)
+		generatePlayer(race);
+	else
+		repositionPlayer();
 	generateStairs();
 	// generate 10 potions randomly
 	for (int i = 0; i < 10; i++) {
@@ -247,6 +251,38 @@ void Floor::generatePlayer(string race) {
 	}
 	// adds some messages to the Action queue
 	actionQueue += " A " + race + " has spawned.";
+}
+
+void Floor::repositionPlayer() {
+	srand(time(NULL));		// random seed
+
+							// The following computes a random number which determines which Chamber to spawn in,
+							// then computes a random number which determines the actual location of spawning within the chamber
+
+	int chamberSpawn = rand() % 5;		// Random number between 0 and 4 to determine which chamber to spawn in.
+	int randIndex = rand() % chambers[chamberSpawn].size();		// Random Cell from the Random Chamber
+
+	int posRow = chambers[chamberSpawn].at(randIndex).row;		// the row of the random location
+	int posCol = chambers[chamberSpawn].at(randIndex).col;		// the column of the random location
+
+		grid[posRow][posCol] = player;
+		player->setPosX(posRow);
+		player->setPosY(posCol);
+	// adds some messages to the Action queue
+	actionQueue += " You travel deeper into the dungeon...";
+}
+
+void Floor::moveLevel() {
+	if (level == 4) {
+		actionQueue += " You have beaten the dungeon! Congratulations! ";
+		player->displayScore();
+		setAlive(false);
+		actionQueue += "Press 'q' to exit or 'r' to play again.";
+		print();
+		return;
+	}
+	level++;
+	initialize("", controller, file);
 }
 //Generates a random potion
 void Floor::generatePotion() {
@@ -444,11 +480,13 @@ void Floor::playerMove(string location) {
 	// simply calls the virtual movement() method for the player
 	bool moved = player->movement(location);
 	// If the move was successful, we move the enemies and print the floor
-	if (moved) {
+	if (moved && alive) {
 		// makes the enemy's turn
 		updateEnemies();
 		player->interactVicinity();
 	}
+	else if (alive == false)
+		return;
 	else actionQueue += " You can't move there.";
 	print();
 }

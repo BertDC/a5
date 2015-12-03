@@ -13,6 +13,7 @@ class Floor {
 	Player *player;					// pointer to the Player abstract class
 	Controller *controller;			// Pointer so the Floor can interact with the Controller
 	int level;						// tracks the level of the this floor
+	std::fstream *file;
 	bool alive;						// Always keeps track of the player's life to determine if dead 
 	std::vector<Pos> chambers[5];	// The 5 chambers with the Cell positions
 	
@@ -29,6 +30,8 @@ public:
 	bool getPlayerHostile();					// Checks if the player has aggravated the Merchants in the current run
 	void setAlive(bool);							
 	bool getAlive();
+	void moveLevel();
+	void repositionPlayer();
 	void generatePlayer(std::string);
 	void generatePotion();
 	void generateStairs();
