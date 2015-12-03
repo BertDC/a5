@@ -5,10 +5,9 @@ using namespace std;
 
 
 // The default controller ctor. Enables reading in from a file
-Controller::Controller(string filename) : currentLevel(0) {
-	file = new fstream(filename.c_str());
-	floor[0] = new Floor(currentLevel);
-	for (int i = 1; i < 5; i++) {
+Controller::Controller(string filename) : currentLevel(0), fileName(filename) {
+	file = new fstream(fileName.c_str());
+	for (int i = 0; i < 5; i++) {
 		floor[i] = NULL;
 	}
 }
@@ -16,6 +15,18 @@ Controller::Controller(string filename) : currentLevel(0) {
 
 Controller::~Controller() {
 
+}
+
+Player * Controller::getActivePlayer() {
+	for (int i = 0; i < 5; i++) {
+		if (floor[i]) {
+			return floor[i]->currentPlayer();
+		}
+	}
+}
+
+string Controller::getFile() {
+	return fileName;
 }
 
 // Starts the game
@@ -35,30 +46,35 @@ void Controller::play() {
 			// If a race is selected, begin the floor 
 			else if (cmd == "s") {
 				string ch = "shade";
+				floor[0] = new Floor(currentLevel);
 				floor[currentLevel]->initialize(ch, this, file);
 				floor[currentLevel]->print();
 				hasSelected = true;
 			}
 			else if (cmd == "d") {
 				string ch = "drow";
+				floor[0] = new Floor(currentLevel);
 				floor[currentLevel]->initialize(ch, this, file);
 				floor[currentLevel]->print();
 				hasSelected = true;
 			}
 			else if (cmd == "v") {
 				string ch = "vampire";
+				floor[0] = new Floor(currentLevel);
 				floor[currentLevel]->initialize(ch, this, file);
 				floor[currentLevel]->print();
 				hasSelected = true;
 			}
 			else if (cmd == "t") {
 				string ch = "troll";
+				floor[0] = new Floor(currentLevel);
 				floor[currentLevel]->initialize(ch, this, file);
 				floor[currentLevel]->print();
 				hasSelected = true;
 			}
 			else if (cmd == "g") {
 				string ch = "goblin";
+				floor[0] = new Floor(currentLevel);
 				floor[currentLevel]->initialize(ch, this, file);
 				floor[currentLevel]->print();
 				hasSelected = true;
@@ -73,6 +89,8 @@ void Controller::play() {
 			currentLevel = 0;
 			hasSelected = false;
 			printCharOptions();
+			delete file;
+			file = new fstream(fileName.c_str());
 			floor[0] = new Floor(currentLevel);
 		}
 		// quit

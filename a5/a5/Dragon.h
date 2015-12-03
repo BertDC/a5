@@ -6,8 +6,8 @@
 
 
 class Dragon : public Enemy {
-	Gold * pile;
 public:
+	Gold * pile;
 	Dragon(int, int, Floor *, Gold *);
 	~Dragon();
 	void movement();		// Has its own 'movement' method.
