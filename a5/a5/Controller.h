@@ -12,10 +12,12 @@ class Controller {
 	std::fstream *file;
 	int currentLevel;
 	void printCharOptions();
+	std::string fileName;	// stores it for resets
 public:
 	Controller(std::string filename);	// Default ctor.
 	~Controller();
-
+	Player * getActivePlayer();			// well, it returns the active player
+	std::string getFile();				// gets the file name
 	void play();
 	
 };

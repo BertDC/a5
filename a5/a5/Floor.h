@@ -29,7 +29,7 @@ public:
 	bool getPlayerHostile();					// Checks if the player has aggravated the Merchants in the current run
 	void setAlive(bool);							
 	bool getAlive();
-	void generatePlayer(std::string);
+	void generatePlayer(std::string, int, int);
 	void generatePotion();
 	void generateStairs();
 	void generateGold();
@@ -44,7 +44,7 @@ public:
 	void updateEnemies();						//Updates the positions of all enemies on the floor
 	int chamberPos(Pos);						// Given a position, returns which chamber its in
 	int getLevel();								// Returns the level that this floor is on
-	bool playerExists();						// Returns if the player exists on this floor
+	Player* currentPlayer();					// Returns the player 
 };
 
 #endif

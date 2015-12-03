@@ -11,6 +11,7 @@
 #include "Halfling.h"
 #include "Merchant.h"
 #include "Dragon.h"
+#include "Controller.h"
 #include "cell.h"
 #include "Gold.h"
 #include <fstream>
@@ -48,6 +49,10 @@ bool Floor::getPlayerHostile() { return player->getAggroMerch(); }
 void Floor::setAlive(bool alv) { alive = alv; }
 
 bool Floor::getAlive() { return alive; }
+
+Player * Floor::currentPlayer() {
+	return player;
+}
 
 // Adds the neighbours of a Cell to the chamber if required
 void Floor::addNeighbours(int row, int col, int chamber) {
@@ -117,55 +122,66 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 				grid[row][col] = new Cell(row, col, ch);
 			}
 			else if (ch == '@') {
-				
+				Player * hold = controller->getActivePlayer();
+				// If the player doesn't already exist, we create it.
+				if (!hold) {
+					generatePlayer(race, row, col);
+				}
+				// otherwise we replace it with the new one
+				else {
+					grid[row][col] = hold;
+				}
 			}
-			else if (ch == '0') {
-
+			else if (ch == '0') {	// Restore hp
+				grid[row][col] = new Potion(row, col, 1);
 			}
-			else if (ch == '1') {
-
+			else if (ch == '1') {	// Boost attack 
+				grid[row][col] = new Potion(row, col, 3);
 			}
-			else if (ch == '2') {
-
+			else if (ch == '2') {	// Boost def
+				grid[row][col] = new Potion(row, col, 5);
 			}
-			else if (ch == '3') {
-
+			else if (ch == '3') {	// poison hp
+				grid[row][col] = new Potion(row, col, 0);
 			}
-			else if (ch == '4') {
-
+			else if (ch == '4') {	// weaken attack
+				grid[row][col] = new Potion(row, col, 2);
 			}
-			else if (ch == '5') {
-
+			else if (ch == '5') {	// weaken def
+				grid[row][col] = new Potion(row, col, 4);
 			}
-			else if (ch == '6') {
-
+			else if (ch == '6') {	// normal gold pile
+				grid[row][col] = new Gold(row, col, 2);
 			}
-			else if (ch == '7') {
-
+			else if (ch == '7') {	// small gold pile
+				grid[row][col] = new Gold(row, col, 1);
 			}
-			else if (ch == '8') {
-
+			else if (ch == '8') {	// merchant hoard
+				grid[row][col] = new Gold(row, col, 4);
 			}
-			else if (ch == '9') {
-
+			else if (ch == '9') {	// Dragon hoard
+				grid[row][col] = new Gold(row, col, 6);
 			}
-			else if (ch == 'M') {
-
+			else if (ch == 'H') {	// Human
+				grid[row][col] = new Human(row, col, this);
 			}
-			else if (ch == 'L') {
-
+			else if (ch == 'M') {	// Merchant
+				grid[row][col] = new Merchant(row, col, this);
 			}
-			else if (ch == 'O') {
-
+			else if (ch == 'L') {	// Halfling
+				grid[row][col] = new Halfling(row, col, this);
 			}
-			else if (ch == 'E') {
-
+			else if (ch == 'O') {	// Orce
+				grid[row][col] = new Orc(row, col, this);
 			}
-			else if (ch == 'W') {
-
+			else if (ch == 'E') {	// Elf
+				grid[row][col] = new Elf(row, col, this);
 			}
-			else if (ch == 'D') {
-
+			else if (ch == 'W') {	// Dwarf
+				grid[row][col] = new Dwarf(row, col, this);
+			}
+			else if (ch == 'D') {	// Dragon
+				grid[row][col] = new Dragon(row, col, this, NULL);
 			}
 			// Debugging warning.... just incase something slips
 			else {
@@ -177,8 +193,32 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 	// Now we setup up the chambers once, which will be used for the rest of the floor
 	makeChambers();
 
-	// If it wasn't a predetermined map, then we generate the players/enemies in the correct order
-	generatePlayer(race);
+	// Now we attatch all dragons to a corresponding dragon hoard
+	if (controller->getFile() != "map.txt") {
+		for (int row = 0; row < 25; row++) {
+			for (int col = 0; col < 79; col++) {
+				if (grid[row][col]->getSymbol() == 'D') {
+					// Check the vicinity for Gold pile
+					for (int i = -1; i < 2; i++) {
+						for (int j = -1; j < 2; j++) {
+							if (grid[row + i][col + j]->getSymbol() == 'G' && grid[row + i][col + j]->getType() == 6) {
+								Gold *hold = dynamic_cast<Gold*>(grid[row + i][col + j]);
+								Dragon * d = dynamic_cast<Dragon*>(grid[row][col]);
+								d->pile = hold;
+								hold->dragon = d;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// If it was a predetermined map, then we stop generation here. 
+	if (controller->getFile() != "map.txt") return;
+
+	// Otherwise we generate the players/enemies in the correct order
+	generatePlayer(race, 0, 0);
 	generateStairs();
 	// generate 10 potions randomly
 	for (int i = 0; i < 10; i++) {
@@ -197,50 +237,60 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 
 }
 
-void Floor::generatePlayer(string race) {
+void Floor::generatePlayer(string race, int x, int y) {
 	srand(time(NULL));		// random seed
 
-	// The following computes a random number which determines which Chamber to spawn in,
-	// then computes a random number which determines the actual location of spawning within the chamber
+	int posRow, posCol, chamberSpawn, randIndex;
 
-	int chamberSpawn = rand() % 5;		// Random number between 0 and 4 to determine which chamber to spawn in.
-	int randIndex = rand() % chambers[chamberSpawn].size();		// Random Cell from the Random Chamber
+	// If it is a predetermined map
+	if (controller->getFile() != "map.txt") {
+		posRow = x;
+		posCol = y;
+	}
+	else {
+		// The following computes a random number which determines which Chamber to spawn in,
+		// then computes a random number which determines the actual location of spawning within the chamber
 
-	int posRow = chambers[chamberSpawn].at(randIndex).row;		// the row of the random location
-	int posCol = chambers[chamberSpawn].at(randIndex).col;		// the column of the random location
+		chamberSpawn = rand() % 5;		// Random number between 0 and 4 to determine which chamber to spawn in.
+		randIndex = rand() % chambers[chamberSpawn].size();		// Random Cell from the Random Chamber
+
+		posRow = chambers[chamberSpawn].at(randIndex).row;		// the row of the random location
+		posCol = chambers[chamberSpawn].at(randIndex).col;		// the column of the random location
+
+	}
 
 	// Determine the race and generate it randomly!
 	if (race == "shade") {
 		// Delete whichever floor cell was previously there
-		delete grid[posRow][posCol];
+		if (controller->getFile() == "map.txt") delete grid[posRow][posCol];
 		// Makes the new player character at that position
 		player = new Shade(posRow, posCol, chamberSpawn, this);
 		grid[posRow][posCol] = player;
 	}
 	else if (race == "drow") {
 		// Delete whichever floor cell was previously there
-		delete grid[posRow][posCol];
+		if (controller->getFile() == "map.txt") delete grid[posRow][posCol];
 		// Makes the new player character at that position
 		player = new Drow(posRow, posCol, chamberSpawn, this);
 		grid[posRow][posCol] = player;
 	}
 	else if (race == "vampire") {
 		// Delete whichever floor cell was previously there
-		delete grid[posRow][posCol];
+		if (controller->getFile() == "map.txt") delete grid[posRow][posCol];
 		// Makes the new player character at that position
 		player = new Vampire(posRow, posCol, chamberSpawn, this);
 		grid[posRow][posCol] = player;
 	}
 	else if (race == "troll") {
 		// Delete whichever floor cell was previously there
-		delete grid[posRow][posCol];
+		if (controller->getFile() == "map.txt") delete grid[posRow][posCol];
 		// Makes the new player character at that position
 		player = new Troll(posRow, posCol, chamberSpawn, this);
 		grid[posRow][posCol] = player;
 	}
 	else if (race == "goblin") {
 		// Delete whichever floor cell was previously there
-		delete grid[posRow][posCol];
+		if (controller->getFile() == "map.txt") delete grid[posRow][posCol];
 		// Makes the new player character at that position
 		player = new Goblin(posRow, posCol, chamberSpawn, this);
 		grid[posRow][posCol] = player;
@@ -496,10 +546,6 @@ void Floor::updateEnemies() {
 			}
 		}
 	}
-}
-
-bool Floor::playerExists() {
-	return player;
 }
 
 void Floor::print() {
