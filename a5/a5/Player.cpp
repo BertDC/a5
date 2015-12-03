@@ -160,9 +160,10 @@ bool Player::movement(string dir) {
 	// Player encounters the stairs
 	if (floor->grid[x][y]->getSymbol() == '\\') {
 		floor->moveLevel();
-		return true;
+		return false;
 	}
 	// Player can't make a move
+	floor->actionQueue += " You can't move there.";
 	return false;
 }
 
@@ -181,7 +182,9 @@ void Player::death() {
 }
 
 void Player::displayScore() {
-	cout << '\n' << '\n' << "Your run has ended. You achieved a score of " << gold << "." << '\n' << endl;
+	stringstream ss;
+	ss << '\n' << '\n' << "Your run has ended. You achieved a score of " << gold << "." << '\n' << endl;
+	floor->actionQueue += ss.str();
 }
 
 void Player::setPosX(int x) { posX = x; }
@@ -304,6 +307,8 @@ bool Player::getAggroMerch() {
 }
 
 void Player::interactVicinity() {
+	if (floor->getAlive() == false)
+		return;
 	for (int i = -1; i < 2; i++)
 		for (int j = -1; j < 2; j++) {
 			char sym = floor->grid[posX + i][posY + j]->getSymbol();
@@ -311,21 +316,36 @@ void Player::interactVicinity() {
 				int type = floor->grid[posX + i][posY + j]->getType();
 				if (knownPots[type] == true) {
 					if (type == 0)
-						floor->actionQueue += " You spot a Poison Health potion.";
+						floor->actionQueue += " You spot a Poison Health potion";
 					else if (type == 1)
-						floor->actionQueue += " You spot a Restore Health potion.";
+						floor->actionQueue += " You spot a Restore Health potion";
 					else if (type == 2)
-						floor->actionQueue += " You spot a Weaken Attack potion.";
+						floor->actionQueue += " You spot a Weaken Attack potion";
 					else if (type == 3)
-						floor->actionQueue += " You spot a Boost Attack potion.";
+						floor->actionQueue += " You spot a Boost Attack potion";
 					else if (type == 4)
-						floor->actionQueue += " You spot a Weaken Defense potion.";
+						floor->actionQueue += " You spot a Weaken Defense potion";
 					else if (type == 5)
-						floor->actionQueue += " You spot a Boost Defense potion.";
-
+						floor->actionQueue += " You spot a Boost Defense potion";
 				}
 				else
-					floor->actionQueue += " You spot an unknown potion.";
+					floor->actionQueue += " You spot an unknown potion";
+				if (i == -1 && j == -1)
+					floor->actionQueue += " to the North-West.";
+				else if (i == -1 && j == 0)
+					floor->actionQueue += " to the North.";
+				else if (i == -1 && j == 1)
+					floor->actionQueue += " to the North-East.";
+				else if (i == 0 && j == -1)
+					floor->actionQueue += " to the West.";
+				else if (i == 0 && j == 1)
+					floor->actionQueue += " to the East.";
+				else if (i == 1 && j == -1)
+					floor->actionQueue += " to the South-West.";
+				else if (i == 1 && j == 0)
+					floor->actionQueue += " to the South.";
+				else if (i == 1 && j == 1)
+					floor->actionQueue += " to the South-East.";
 			}
 		}
 }

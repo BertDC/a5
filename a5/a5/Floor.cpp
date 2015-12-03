@@ -540,7 +540,6 @@ void Floor::playerMove(string location) {
 	}
 	else if (alive == false)
 		return;
-	else actionQueue += " You can't move there.";
 	print();
 }
 

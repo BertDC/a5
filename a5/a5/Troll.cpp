@@ -38,3 +38,8 @@ bool Troll::consumePotion(std::string dir) {
 	return consumed;
 	
 }
+
+void Troll::resetModifiers() {
+	Player::resetModifiers();
+	hp = fmin(hp + 5, maxHp);
+}

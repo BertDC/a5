@@ -10,6 +10,7 @@ public:
 	void attack(Creature *);
 	bool movement(std::string);
 	bool consumePotion(std::string);
+	void resetModifiers();
 };
 
 #endif
