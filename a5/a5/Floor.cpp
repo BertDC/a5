@@ -34,11 +34,11 @@ Floor::Floor(int level) : level(level), grid(NULL), player(NULL), alive(true), a
 Floor::~Floor() {
 	for (int row = 0; row < 25; row++) {
 		for (int col = 0; col < 79; col++) {
-			delete grid[row][col];
+			if (grid) delete grid[row][col];
 		}
-		delete grid[row];
+		if (grid) delete grid[row];
 	}
-	delete grid;
+	if (grid) delete grid;
 }
 
 int Floor::getLevel() { return level; }
@@ -49,10 +49,6 @@ bool Floor::getPlayerHostile() { return player->getAggroMerch(); }
 void Floor::setAlive(bool alv) { alive = alv; }
 
 bool Floor::getAlive() { return alive; }
-
-Player * Floor::currentPlayer() {
-	return player;
-}
 
 // Adds the neighbours of a Cell to the chamber if required
 void Floor::addNeighbours(int row, int col, int chamber) {
@@ -123,15 +119,17 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 				grid[row][col] = new Cell(row, col, ch);
 			}
 			else if (ch == '@') {
-				Player * hold = controller->getActivePlayer();
 				// If the player doesn't already exist, we create it.
-				if (!hold) {
+				if (!player) {
 					generatePlayer(race, row, col);
 			}
 				// otherwise we replace it with the new one
 				else {
-					grid[row][col] = hold;
-			}
+					grid[row][col] = player;
+					player->setPosX(row);
+					player->setPosY(col);
+					actionQueue += " You travel deeper into the dungeon...";
+				}
 			}
 			else if (ch == '0') {	// Restore hp
 				grid[row][col] = new Potion(row, col, 1);
@@ -225,7 +223,9 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 		generatePlayer(race, 0, 0);
 	else
 		repositionPlayer();
+
 	generateStairs();
+
 	// generate 10 potions randomly
 	for (int i = 0; i < 10; i++) {
 		generatePotion();
@@ -334,6 +334,7 @@ void Floor::moveLevel() {
 		return;
 	}
 	level++;
+	player->resetModifiers();
 	initialize("", controller, file);
 }
 //Generates a random potion

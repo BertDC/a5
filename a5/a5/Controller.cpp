@@ -5,24 +5,14 @@ using namespace std;
 
 
 // The default controller ctor. Enables reading in from a file
-Controller::Controller(string filename) : currentLevel(0), fileName(filename) {
+Controller::Controller(string filename) : fileName(filename) {
 	file = new fstream(fileName.c_str());
-	for (int i = 0; i < 5; i++) {
-		floor[i] = NULL;
-	}
+	floor = NULL;
 }
 
 
 Controller::~Controller() {
-
-}
-
-Player * Controller::getActivePlayer() {
-	for (int i = 0; i < 5; i++) {
-		if (floor[i]) {
-			return floor[i]->currentPlayer();
-		}
-	}
+	delete floor;
 }
 
 string Controller::getFile() {
@@ -46,65 +36,63 @@ void Controller::play() {
 			// If a race is selected, begin the floor 
 			else if (cmd == "s") {
 				string ch = "shade";
-				floor[0] = new Floor(currentLevel);
-				floor[currentLevel]->initialize(ch, this, file);
-				floor[currentLevel]->print();
+				floor = new Floor(0);
+				floor->initialize(ch, this, file);
+				floor->print();
 				hasSelected = true;
 			}
 			else if (cmd == "d") {
 				string ch = "drow";
-				floor[0] = new Floor(currentLevel);
-				floor[currentLevel]->initialize(ch, this, file);
-				floor[currentLevel]->print();
+				floor = new Floor(0);
+				floor->initialize(ch, this, file);
+				floor->print();
 				hasSelected = true;
 			}
 			else if (cmd == "v") {
 				string ch = "vampire";
-				floor[0] = new Floor(currentLevel);
-				floor[currentLevel]->initialize(ch, this, file);
-				floor[currentLevel]->print();
+				floor = new Floor(0);
+				floor->initialize(ch, this, file);
+				floor->print();
 				hasSelected = true;
 			}
 			else if (cmd == "t") {
 				string ch = "troll";
-				floor[0] = new Floor(currentLevel);
-				floor[currentLevel]->initialize(ch, this, file);
-				floor[currentLevel]->print();
+				floor = new Floor(0);
+				floor->initialize(ch, this, file);
+				floor->print();
 				hasSelected = true;
 			}
 			else if (cmd == "g") {
 				string ch = "goblin";
-				floor[0] = new Floor(currentLevel);
-				floor[currentLevel]->initialize(ch, this, file);
-				floor[currentLevel]->print();
+				floor = new Floor(0);
+				floor->initialize(ch, this, file);
+				floor->print();
 				hasSelected = true;
 			}
-			floor[currentLevel]->setAlive(true);
 		}
 		// reset
-		if (cmd == "r") {
-			for (int i = 0; i < 5; i++) {
-				delete floor[i];
+		else if (cmd == "r") {
+			if (floor) {
+				delete floor;
 			}
-			currentLevel = 0;
 			hasSelected = false;
 			printCharOptions();
-			delete file;
+			if (file) {
+				delete file;
+			}
 			file = new fstream(fileName.c_str());
-			floor[0] = new Floor(currentLevel);
+			floor = new Floor(0);
 		}
 		// quit
 		else if (cmd == "q") {
 			break;
 		}
-		else if (floor[currentLevel]->getAlive() == false) {
-			cout << "Not a valid command at this time. Press 'r' to restart or 'q' to quit the game." << endl;
-		}
 		// The normal commands that can be issued when the game has started
 		// Checks all directions
 		else if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
 			|| cmd == "nw" || cmd == "ne" || cmd == "sw" || cmd == "se") {
-			floor[currentLevel]->playerMove(cmd);
+			if (!floor) continue;
+			floor->playerMove(cmd);
 		}
 
 		// Use potion
@@ -113,7 +101,8 @@ void Controller::play() {
 			// Checks all directions
 			if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
 				|| cmd == "nw" || cmd == "ne" || cmd == "sw" || cmd == "se") {
-				floor[currentLevel]->playerUse(cmd);
+				if (!floor) continue;
+				floor->playerUse(cmd);
 			}
 
 		}
@@ -123,12 +112,9 @@ void Controller::play() {
 			// Checks all directions
 			if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
 				|| cmd == "nw" || cmd == "ne" || cmd == "sw" || cmd == "se") {
-				floor[currentLevel]->playerAttack(cmd);
+				if (!floor) continue;
+				floor->playerAttack(cmd);
 			}
-		}
-		// Debug (prints the floor)
-		else if (cmd == "p") {
-			floor[currentLevel]->print();
 		}
 	}
 }

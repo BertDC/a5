@@ -30,7 +30,7 @@ void Orc::attack(Creature *defender) {
 			damage = ceil((100 / (100 + defender->getDefense()))*atk);
 		else {
 			damage = 1.5*ceil((100 / (100 + defender->getDefense()))*atk);
-			ss << " ORC CRUSH PUNY GOBLIN! ";
+			ss << " ORC CRUSH PUNY GOBLIN!";
 		}
 		ss << " You were struck for " << damage << " damage by the " << name << ".";
 		floor->actionQueue += ss.str();

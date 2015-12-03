@@ -12,6 +12,7 @@ public:
 	~Dragon();
 	void movement();		// Has its own 'movement' method.
 	void death();
+	void checkGoldPile(int, int);	// checks if the player is within gold pile range
 };
 
 

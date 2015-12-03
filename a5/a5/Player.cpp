@@ -166,18 +166,22 @@ bool Player::movement(string dir) {
 	return false;
 }
 
+// Resets potion modifiers
+void Player::resetModifiers() {
+	defMod = 0;
+	atkMod = 0;
+}
 
 void Player::death() {
-	floor->actionQueue += "You have perished.";
+	if (!floor->getAlive()) return;
+	floor->actionQueue += " You have perished.";
 	displayScore();
 	floor->setAlive(false);
 	floor->actionQueue += "Press 'q' to exit or 'r' to try again.";
 }
 
 void Player::displayScore() {
-	stringstream ss;
-	ss << endl << "Your run has ended. You achieved a score of " << gold << "." << endl;;
-	floor->actionQueue += ss.str();
+	cout << '\n' << '\n' << "Your run has ended. You achieved a score of " << gold << "." << '\n' << endl;
 }
 
 void Player::setPosX(int x) { posX = x; }
