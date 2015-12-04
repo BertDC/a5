@@ -7,6 +7,7 @@ Cell::Cell(int x, int y, char sym)
 	symbol = sym;
 	moves = false;
 	inChamber = false;
+	chamber = -1;
 }
 
 Cell::Cell(int x, int y, char sym, bool move)
@@ -26,6 +27,10 @@ Pos Cell::getLocation() {
 
 Cell::~Cell()
 {
+}
+
+int Cell::getChamber() {
+	return chamber;
 }
 
 char Cell::getSymbol() {

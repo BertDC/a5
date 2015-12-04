@@ -16,6 +16,7 @@ protected:
 	int posY;
 	char symbol;
 	bool moves;
+	int chamber;
 	
 
 public:
@@ -27,6 +28,7 @@ public:
 	virtual int getType(); //Used for determining type of gold/potion collected
 	virtual void movement();
 	virtual Pos getLocation();		// Gets the cell location
+	virtual int getChamber();
 };
 
 #endif

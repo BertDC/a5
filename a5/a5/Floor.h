@@ -23,6 +23,7 @@ public:
 
 	Cell ***grid;					// 2d-array containing each individual cell* on the floor
 	std::string actionQueue;		// stores the Action messages
+	static bool dlc;				// Static variable to determine if there is dlc or not
 	void initialize(std::string, Controller *, std::fstream *);
 	void playerMove(std::string);
 	void playerAttack(std::string);

@@ -13,6 +13,7 @@ int main(int argc, char *argv[]) {
 		// Case where no filename is given. Uses default
 		file = "map.txt";
 	}
+	// Defaults the DLC to OFF
 	Controller c(file);
 	c.play();
 

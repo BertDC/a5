@@ -24,6 +24,10 @@ int Player::getChamber() {
 	return chamber;
 }
 
+void Player::setChamber(int ch) {
+	chamber = ch;
+}
+
 Player::~Player() {
 
 }

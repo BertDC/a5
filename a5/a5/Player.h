@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "Creature.h"
+#include "Gold.h"
 #include "Floor.h"
 #include "Potion.h"
 #include <string>
@@ -21,6 +22,7 @@ public:
 	Player(int, int, int, Floor*);
 	virtual ~Player() = 0;
 	int getChamber();
+	void setChamber(int);
 	void setPosX(int);
 	void setPosY(int);
 	bool getAggroMerch();

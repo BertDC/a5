@@ -8,6 +8,7 @@ class Floor;
 class Enemy : public Creature {
 protected:
 	bool hasMoved;				// used to prevent more than one move
+
 public:
 	Enemy(int, int, char, Floor *);
 	~Enemy();

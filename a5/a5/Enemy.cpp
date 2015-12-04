@@ -10,12 +10,15 @@ using namespace std;
 
 Enemy::Enemy(int x, int y, char sym, Floor * flr) : Creature(x, y, sym, flr) {
 	hasMoved = false;
+	chamber = floor->chamberPos(Pos(x, y));
 }
 
 
 Enemy::~Enemy() {
 
 }
+
+
 
 void Enemy::death() {
 	// Makes temporary cell *, swaps and deletes

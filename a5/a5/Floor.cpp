@@ -27,6 +27,8 @@ using namespace std;
 Pos::Pos(int x, int y) : row(x), col(y) { }
 Pos::~Pos() { }
 
+bool Floor::dlc = false;
+
 // The only constructor
 Floor::Floor(int level) : level(level), grid(NULL), player(NULL), alive(true), actionQueue("") { }
 
@@ -534,6 +536,8 @@ void Floor::playerMove(string location) {
 	bool moved = player->movement(location);
 	// If the move was successful, we move the enemies and print the floor
 	if (moved && alive) {
+		// Updates the player's chamber for DLC purposes
+		player->setChamber(chamberPos(player->Cell::getLocation()));
 		// makes the enemy's turn
 		updateEnemies();
 		player->interactVicinity();
@@ -592,7 +596,33 @@ void Floor::print() {
 	// goes through the Cell grid and prints out the symbol
 	for (int i = 0; i < 25; i++) {
 		for (int j = 0; j < 79; j++) {
-			cout << grid[i][j]->getSymbol();		// outputs the symbol associated to each cell
+			// DLC - Fog of War
+			if (Floor::dlc) {
+				if (grid[i][j]->getChamber() == -1) {
+					if (grid[i][j]->getSymbol() == 'P' || grid[i][j]->getSymbol() == 'G' || grid[i][j]->getSymbol() == '\\') {
+						Pos hold = grid[i][j]->getLocation();
+						if (chamberPos(hold) == player->getChamber()) {
+							cout << grid[i][j]->getSymbol();
+						}
+						else {
+							cout << '.';
+						}
+					}
+					else {
+						cout << grid[i][j]->getSymbol();
+					}					
+				}
+				else if (grid[i][j]->getChamber() == player->getChamber()) {
+					cout << grid[i][j]->getSymbol();
+				}
+				else {
+					cout << '.';
+				}
+			}
+			// Normal case
+			else {
+				cout << grid[i][j]->getSymbol();		// outputs the symbol associated to each cell
+			}
 		}
 		cout << endl;	// newline (end of row)
 	}

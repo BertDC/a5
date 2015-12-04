@@ -28,6 +28,13 @@ void Controller::play() {
 
 	// Command interpreter loop
 	while (cin >> cmd) {
+		// For DLC purposes
+		if (cmd == "dlc") {
+			// Toggles fog of war
+			if (Floor::dlc) Floor::dlc = false;
+			else Floor::dlc = true;
+			if (floor) floor->print();
+		}
 		// Race selection
 		if (!hasSelected) {
 			if (cmd == "q") {
