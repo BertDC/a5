@@ -4,7 +4,6 @@
 #include <sstream>
 #include <cstdlib>
 
-#pragma once
 class Goblin : public Player
 {
 public:

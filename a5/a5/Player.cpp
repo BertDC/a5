@@ -19,15 +19,6 @@ Player::Player(int x, int y, int ch, Floor *flr) : Creature(x, y, '@', flr) {
 	aggroMerch = false;
 }
 
-
-int Player::getChamber() {
-	return chamber;
-}
-
-void Player::setChamber(int ch) {
-	chamber = ch;
-}
-
 Player::~Player() {
 
 }
@@ -163,6 +154,7 @@ bool Player::movement(string dir) {
 	}
 	// Player encounters the stairs
 	if (floor->grid[x][y]->getSymbol() == '\\') {
+		prev = '.';
 		floor->moveLevel();
 		return false;
 	}
@@ -187,6 +179,9 @@ void Player::death() {
 
 void Player::displayScore() {
 	stringstream ss;
+	if (name == "Shade") {
+		gold *= 1.5;
+	}
 	ss << '\n' << '\n' << "Your run has ended. You achieved a score of " << gold << "." << '\n' << endl;
 	floor->actionQueue += ss.str();
 }

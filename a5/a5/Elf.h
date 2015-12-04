@@ -2,7 +2,6 @@
 #define ELF_H
 #include "Enemy.h"
 
-#pragma once
 class Elf : public Enemy
 {
 public:

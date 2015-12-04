@@ -2,7 +2,6 @@
 #define HALFLING_H
 #include "Enemy.h"
 
-#pragma once
 class Halfling : public Enemy
 {
 public:

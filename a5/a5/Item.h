@@ -1,6 +1,7 @@
+#ifndef ITEM_H
+#define ITEM_H
 #include "cell.h"
 
-#pragma once
 class Item : public Cell
 {
 public:
@@ -8,3 +9,5 @@ public:
 	~Item();
 	virtual int getType() = 0;  //Used for determining type of gold/potion collected
 };
+
+#endif

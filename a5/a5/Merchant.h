@@ -2,7 +2,6 @@
 #define MERCHANT_H
 #include "Enemy.h"
 
-#pragma once
 class Merchant : public Enemy
 {
 public:

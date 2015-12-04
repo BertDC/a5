@@ -29,6 +29,7 @@ public:
 	virtual void movement();
 	virtual Pos getLocation();		// Gets the cell location
 	virtual int getChamber();
+	virtual void setChamber(int);
 };
 
 #endif

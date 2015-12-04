@@ -13,6 +13,18 @@ int main(int argc, char *argv[]) {
 		// Case where no filename is given. Uses default
 		file = "map.txt";
 	}
+
+	// Checks if the given map is a predetermined save file
+	fstream *f = new fstream(file.c_str());
+	char ch;
+	while ((*f >> noskipws) >> ch) {
+		if (ch == '@') {
+			Floor::predetermined = true;
+			break;
+		}
+	}
+	delete f;
+
 	// Defaults the DLC to OFF
 	Controller c(file);
 	c.play();

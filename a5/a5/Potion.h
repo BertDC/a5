@@ -1,7 +1,6 @@
 #include "Item.h"
 #include <string>
 
-#pragma once
 class Potion : public Item
 {
 protected:

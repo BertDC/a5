@@ -21,8 +21,6 @@ protected:
 public:
 	Player(int, int, int, Floor*);
 	virtual ~Player() = 0;
-	int getChamber();
-	void setChamber(int);
 	void setPosX(int);
 	void setPosY(int);
 	bool getAggroMerch();

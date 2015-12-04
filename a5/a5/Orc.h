@@ -2,7 +2,6 @@
 #define ORC_H
 #include "Enemy.h"
 
-#pragma once
 class Orc : public Enemy
 {
 public:

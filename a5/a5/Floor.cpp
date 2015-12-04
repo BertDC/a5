@@ -23,11 +23,9 @@
 
 using namespace std;
 
-// The Position class
-Pos::Pos(int x, int y) : row(x), col(y) { }
-Pos::~Pos() { }
-
+// Static variable init
 bool Floor::dlc = false;
+bool Floor::predetermined = false;
 
 // The only constructor
 Floor::Floor(int level) : level(level), grid(NULL), player(NULL), alive(true), actionQueue("") { }
@@ -38,9 +36,9 @@ Floor::~Floor() {
 		for (int col = 0; col < 79; col++) {
 			if (grid) delete grid[row][col];
 		}
-		if (grid) delete grid[row];
+		if (grid) delete [] grid[row];
 	}
-	if (grid) delete grid;
+	if (grid) delete [] grid;
 }
 
 int Floor::getLevel() { return level; }
@@ -77,9 +75,12 @@ void Floor::addNeighbours(int row, int col, int chamber) {
 void Floor::addToChamber(int row, int col, int chamber) {
 	if (grid[row][col]->inChamber) return;		// This cell is already part of a chamber
 	// Otherwise...
-	Pos * position = new Pos(row, col);
-	chambers[chamber].push_back(*position);			// adds the position to the Chamber
+	Pos position(row, col);
+	chambers[chamber].push_back(position);			// adds the position to the Chamber
 	grid[row][col]->inChamber = true;
+	if (grid[row][col]->getSymbol() != '.') {
+		grid[row][col]->setChamber(chamber);
+	}
 
 	// Now we add the neighbours
 	addNeighbours(row, col, chamber);
@@ -91,7 +92,10 @@ void Floor::makeChambers() {
 	for (int row = 0; row < 25; row++) {
 		for (int col = 0; col < 79; col++) {
 			// If we find a floor tile that is not currently part of a chamber, add it to that chamber;
-			if (grid[row][col]->getSymbol() == '.' && !grid[row][col]->inChamber) {
+			char ch = grid[row][col]->getSymbol();
+			
+			if ((ch == '.' || ch == 'H' || ch == 'O' || ch == 'W' || ch == 'E' || ch == 'L' 
+				|| ch == 'D' || ch == 'M' || ch == '\\' || ch == '@') && !grid[row][col]->inChamber) {
 				addToChamber(row, col, chamber);
 				chamber++;  // The next empty tile we find will be part of the next chamber.
 			}
@@ -130,6 +134,7 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 					grid[row][col] = player;
 					player->setPosX(row);
 					player->setPosY(col);
+					player->setChamber(chamberPos(player->getLocation()));
 					actionQueue += " You travel deeper into the dungeon...";
 				}
 			}
@@ -172,7 +177,7 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 			else if (ch == 'L') {	// Halfling
 				grid[row][col] = new Halfling(row, col, this);
 			}
-			else if (ch == 'O') {	// Orce
+			else if (ch == 'O') {	// Orc
 				grid[row][col] = new Orc(row, col, this);
 			}
 			else if (ch == 'E') {	// Elf
@@ -191,11 +196,8 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 		}
 	}
 
-	// Now we setup up the chambers once, which will be used for the rest of the floor
-	makeChambers();
-
 	// Now we attatch all dragons to a corresponding dragon hoard
-	if (controller->getFile() != "map.txt") {
+	if (predetermined) {
 		for (int row = 0; row < 25; row++) {
 			for (int col = 0; col < 79; col++) {
 				if (grid[row][col]->getSymbol() == 'D') {
@@ -215,16 +217,21 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 		}
 	}
 
-	// If it was a predetermined map, then we stop generation here. 
-	if (controller->getFile() != "map.txt") return;
+	// Now we setup up the chambers once, which will be used for the rest of the floor
+	makeChambers();
 
-	
-	
+	// If it was a predetermined map, then we stop generation here. 
+	if (predetermined) return;
+
 	// Otherwise we generate the players/enemies in the correct order
-	if (player == NULL)
+	if (player == NULL) {
 		generatePlayer(race, 0, 0);
-	else
+		player->setChamber(chamberPos(player->getLocation()));
+	}
+	else {
 		repositionPlayer();
+		player->setChamber(chamberPos(player->getLocation()));
+	}
 
 	generateStairs();
 
@@ -242,7 +249,6 @@ void Floor::initialize(string race, Controller *c, fstream *file) {
 	}
 	// Checks the initial vicinity of the character so it can see potions 
 	player->interactVicinity();
-
 }
 
 void Floor::generatePlayer(string race, int x, int y) {
@@ -251,7 +257,7 @@ void Floor::generatePlayer(string race, int x, int y) {
 	int posRow, posCol, chamberSpawn, randIndex;
 
 	// If it is a predetermined map
-	if (controller->getFile() != "map.txt") {
+	if (predetermined) {
 		posRow = x;
 		posCol = y;
 	}
@@ -337,6 +343,7 @@ void Floor::moveLevel() {
 	}
 	level++;
 	player->resetModifiers();
+	clearFloor();
 	initialize("", controller, file);
 }
 //Generates a random potion
@@ -505,8 +512,15 @@ void Floor::giveGold(int gold) {
 	player->giveGold(gold);
 }
 
+// Clears everything except the player
 void Floor::clearFloor() {
-
+	for (int i = 0; i < 25; i++) {
+		for (int j = 0; j < 79; j++) {
+			// We delete everything except the player
+			if (dynamic_cast<Player*>(grid[i][j])) continue;
+			delete grid[i][j];
+		}
+	}
 }
 
 // Given a position, returns which chamber it is in.

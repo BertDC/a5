@@ -13,6 +13,7 @@ Controller::Controller(string filename) : fileName(filename) {
 
 Controller::~Controller() {
 	delete floor;
+	delete file;
 }
 
 string Controller::getFile() {
@@ -28,17 +29,22 @@ void Controller::play() {
 
 	// Command interpreter loop
 	while (cin >> cmd) {
-		// For DLC purposes
-		if (cmd == "dlc") {
-			// Toggles fog of war
-			if (Floor::dlc) Floor::dlc = false;
-			else Floor::dlc = true;
-			if (floor) floor->print();
-		}
 		// Race selection
 		if (!hasSelected) {
 			if (cmd == "q") {
 				break;
+			}
+			// For DLC purposes
+			if (cmd == "dlc") {
+				// Toggles fog of war
+				if (Floor::dlc) {
+					Floor::dlc = false;
+					cout << "Turning off DLC" << endl;
+				}
+				else {
+					Floor::dlc = true;
+					cout << "Turning DLC on" << endl;
+				}
 			}
 			// If a race is selected, begin the floor 
 			else if (cmd == "s") {
@@ -81,6 +87,7 @@ void Controller::play() {
 		else if (cmd == "r") {
 			if (floor) {
 				delete floor;
+				floor = NULL;
 			}
 			hasSelected = false;
 			printCharOptions();
@@ -88,7 +95,6 @@ void Controller::play() {
 				delete file;
 			}
 			file = new fstream(fileName.c_str());
-			floor = new Floor(0);
 		}
 		// quit
 		else if (cmd == "q") {

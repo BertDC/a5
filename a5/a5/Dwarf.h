@@ -2,7 +2,6 @@
 #define DWARF_H
 #include "Enemy.h"
 
-#pragma once
 class Dwarf : public Enemy
 {
 public:

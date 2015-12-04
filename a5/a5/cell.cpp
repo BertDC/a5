@@ -1,5 +1,11 @@
 #include "cell.h"
 
+
+// The Position class
+Pos::Pos(int x, int y) : row(x), col(y) { }
+Pos::~Pos() { }
+
+
 Cell::Cell(int x, int y, char sym)
 {
 	posX = x;
@@ -31,6 +37,10 @@ Cell::~Cell()
 
 int Cell::getChamber() {
 	return chamber;
+}
+
+void Cell::setChamber(int ch) {
+	chamber = ch;
 }
 
 char Cell::getSymbol() {
