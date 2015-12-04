@@ -87,6 +87,7 @@ void Controller::play() {
 		else if (cmd == "q") {
 			break;
 		}
+		else if (floor->getAlive() == false) {}
 		// The normal commands that can be issued when the game has started
 		// Checks all directions
 		else if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we"
