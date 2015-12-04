@@ -360,7 +360,6 @@ void Floor::generatePotion() {
 		delete grid[posRow][posCol];
 		// Makes the new potion at that position
 		grid[posRow][posCol] = new Potion(posRow, posCol, (rand() % 6));
-		
 }
 
 // Generates the stairs in a chamber without the Player

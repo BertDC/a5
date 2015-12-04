@@ -78,7 +78,10 @@ void Dragon::checkGoldPile(int x, int y) {
 // Overriden death method... Allows for Player to pick up the dragon hoard
 void Dragon::death() {
 	pile->dragon = NULL;		// The dragon is no longer associated with the gold pile
-	Enemy::death();				// Calls the normal death method
+								
+	Cell * hold = floor->grid[posX][posY];	// Makes temporary cell *, swaps and deletes
+	floor->grid[posX][posY] = new Cell(posX, posY, '.');
+	delete hold;
 }
 
 Dragon::~Dragon() {
