@@ -32,8 +32,8 @@ Player::~Player() {
 void Player::printStats() {
 	cout << "Race: " << name << " Gold: " << gold << "                                                  Floor: " << floor->getLevel() + 1 << endl;
 	cout << "HP: " << hp << endl;
-	cout << "ATK: " << atk + atkMod << endl;
-	cout << "DEF: " << def + defMod << endl;
+	cout << "ATK: " << fmax(atk + atkMod, 0) << endl;
+	cout << "DEF: " << fmax(def + defMod, 0) << endl;
 	cout << "Action:" << floor->actionQueue << endl;
 	// Resets the list of actions
 	floor->actionQueue = "";
@@ -193,7 +193,7 @@ void Player::setPosY(int y) { posY = y; }
 
 void Player::attack(Creature *defender) {
 	// Calculates and deals the damage
-	double damage = ceil((100 / (100 + defender->getDefense()))*(atk + atkMod));
+	double damage = ceil((100 / (100 + defender->getDefense()))*fmax(atk + atkMod, 0));
 	// Prints a message
 	stringstream ss;
 	int tempHp = defender->getHp() - damage;
@@ -261,8 +261,8 @@ bool Player::consumePotion(string dir) {
 	int type = floor->grid[x][y]->getType();
 	//Potion effects take place depending on type consumed
 	if (type == 0) {
-		loseHp(10);
 		floor->actionQueue += " You feel sick! Lost 10 health.";
+		loseHp(10);
 	}
 	else if (type == 1) {
 		hp = fmin(maxHp, hp + 10);
@@ -299,7 +299,7 @@ void Player::giveGold(int x) {
 }
 
 double Player::getDefense() {
-	return def + defMod;
+	return fmax(def + defMod, 0);
 }
 
 bool Player::getAggroMerch() {
