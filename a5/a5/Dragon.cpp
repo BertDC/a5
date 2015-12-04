@@ -84,10 +84,6 @@ void Dragon::death() {
 	delete hold;
 }
 
-void Enemy::death() {
-	
-}
-
 Dragon::~Dragon() {
 
 }
